@@ -49,7 +49,7 @@ The system we create will implement a microservices architecture. All requests f
 
 ### Models
 
-We will be using MySql as our persisten data store.
+We will be using MySql as our persistent data store.
 
 **User** \
 `User`: Keeps track of user information. \
