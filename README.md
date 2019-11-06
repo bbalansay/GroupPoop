@@ -46,6 +46,67 @@ The system we create will implement a microservices architecture. All requests f
 | 8   |  |
 
 ### Endpoints
+`/user/login`: \
+  -`POST`: `application/json`: Log in user and returns session token.
+    -`200`; `application/json`: Successfully logs in user; returns session token in `Authorization` header. \
+    -`401`: Cannot authenticate provided credentials. \
+    -`415`: Cannot decode body / received unsupported body. \
+    -`500`: Internal server error. \
+  -`DELETE`: Log out a user.
+    -`200`: Successfully logs out user. \
+    -`401`: Cannot verify session token or no session token. \
+    -`500`: Internal server error. \
+
+`/user`: \
+  -`GET`: Get user information, including reviews.
+    -`200`; `application/json`: Succesfully retrieves user information, returns encoded user model in body. \
+    -`401`: Cannot verify session token or no session token. \
+    -`500`: Internal server error. \
+  -`POST`: `application/json`: Create a new user.
+    -`201`; `application/json`: Successfully creates a new user, returns encoded user model in body. \
+    -`401`: Cannot verify session token or no session token. \
+    -`415`: Cannot decode body / received unsupported body. \
+    -`500`: Internal server error. \
+  -`PATCH`: `application/json`: Update password for user.
+    -`200`; `application/json`: Successfully updates password for user. \
+    -`401`: Cannot verify session token or no session token. \
+    -`415`: Cannot decode body / received unsupported body. \
+    -`500`: Internal server error. \
+  -`DELETE`: Delete a user.
+    -`200`: Successfully deletes user. \
+    -`401`: Cannot verify session token or no session token. \
+    -`500`: Internal server error. \
+
+`/review`: \
+  -`GET`: Get review information
+    -`200`; `application/json`: Succesfully retrieves review information, returns encoded review model in body. \
+    -`401`: Cannot verify session token or no session token. \
+    -`500`: Internal server error. \
+  -`POST`: `application/json`: Create a new review.
+    -`201`; `application/json`: Successfully creates a new review, returns encoded review model in body. \
+    -`401`: Cannot verify session token or no session token. \
+    -`415`: Cannot decode body / received unsupported body. \
+    -`500`: Internal server error. \
+  -`PATCH`: `application/json`: Update review.
+    -`200`; `application/json`: Successfully updates review. \
+    -`401`: Cannot verify session token or no session token. \
+    -`415`: Cannot decode body / received unsupported body. \
+    -`500`: Internal server error. \
+  -`DELETE`: Delete a review.
+    -`200`: Successfully deletes review. \
+    -`401`: Cannot verify session token or no session token. \
+    -`500`: Internal server error. \
+
+`/bathroom`: \
+  -`GET`: Get bathroom information
+    -`200`; `application/json`: Succesfully retrieves bathroom information, returns encoded review model in body. \
+    -`401`: Cannot verify session token or no session token. \
+    -`500`: Internal server error. \
+
+`/chat`: websocket connection for users to chat with each other.\
+  - User is required to connect with session token otherwise they are not logged in.
+
+
 
 ### Models
 
