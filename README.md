@@ -36,12 +36,12 @@ The system we create will implement a microservices architecture. All requests f
 | #   | Solution to Issue |
 | --- | -------- |
 | 1   | To get information about a bathroom on campus, make a **GET request** at `/bathrooms/{id}`. Upon receiving the request, the server will attempt to fetch data from the **MySQL database** using a **SELECT statement** and display the information if successful. |
-| 2   |  |
-| 3   |  |
-| 4   |  |
-| 5   |  |
-| 6   |  |
-| 7   |  |
+| 2   | To chat with someone, a user must utilize a websocket connection to connect with other users who are logged in. |
+| 3   | To create an account, a user must make a **POST request** at `/users/{id}`. Upon receiving the request, the server will check to see if there is already a user with those credentials from the **MySQL database** using a **SELECT statement**. If there is already a user we will return a session token, if not we will create a new user using a **INSERT statement**. |
+| 4   | To review a bathroom on campus, make a **POST request** at `/bathrooms/{id}`. Upon receiving the request, the server will create a new **INSERT statement** using the information prvided to add to the **MySQL database.|
+| 5   | To make a list of favorite bathrooms, make a **PATCH request** at `/user/{id}`. Upon receiving the request, the server will update the user information in the **MySQL database** to include a list of bathrooms. |
+| 6   | To delete a review of a bathroom make a **DELETE request** at `/review/{id}`. Upon receiving the request, the server will delete a review from the **MySQL database** that matches the given information. |
+| 7   | To like a review of a bathroom make a **PATCH request** at `/review/{id}`. Upon receiving the request, the server will update a review from the **MySQL database** to increment the likes value. |
 
 ### Endpoints
 `/user/login`: \
