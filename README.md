@@ -1,7 +1,5 @@
 # GroupPoop
-
-<br>
-
+---
 ## Project Description
 
 The target audience for GroupPoop are primarily the **students and faculty** at the **University of Washington**, though in the future we hope this to be scaled to a wider audience. 
@@ -20,8 +18,8 @@ Most of us, if not all of us, have had some uncomfortable situations when needin
 
 ### User Stories
 
-| #   | Priority | User      | Description |
-| --- | -------- | --------- | ----------- |
+| #   | Priority | User      | Issue |
+| --- | -------- | --------- | ----- |
 | 1   | P0       | As a user | I want to get the information about a bathroom on campus |
 | 2   | P0       | As a user | I want to add a new bathroom to GroupPoop |
 | 3   | P0       | As a user | I want to chat with someone while going about my business |
@@ -33,7 +31,7 @@ Most of us, if not all of us, have had some uncomfortable situations when needin
 
 <br>
 
-| #   | Solution |
+| #   | Solution to Issue |
 | --- | -------- |
 | 1   | To get information about a bathroom on campus, make a **GET request** at `/bathrooms/{id}`. Upon receiving the request, the server will attempt to fetch data from the **MySQL database** using a **SELECT statement** and display the information if successful. |
 | 2   | To add a new bathroom to GroupPoop, a **POST request** will be made at `/bathrooms` containing relevant information about the bathroom to add. The server will then contact the **MySQL database** and execute an **INSERT statement**, returning the object if created successfully. |
