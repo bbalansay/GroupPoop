@@ -20,16 +20,27 @@ Most of us, if not all of us, have had some uncomfortable situations when needin
 
 ### User Stories
 
-| Priority | User | Description |
-| --- | --- | --- |
-| P0 | As a user | I want to get the information on a toilet on campus |
-| P0 | As a user | I want to add a new toilet to the database to be able to rate it |
-| P0 | As a user | I want to chat with someone, have small talk while I am doing my business |
-| P0 | As a user | I want to log in / create an account |
-| P1 | As a user | I want to rate a toilet location |
-| P1 | As a user | I want to make a list of my favorite bathrooms |
-| P2 | As a user | I want to delete a post |
-| P2 | As a user | I want to like a post |
+| #   | Priority | User      | Description |
+| --- | -------- | --------- | ----------- |
+| 1   | P0       | As a user | I want to get the information about a bathroom on campus |
+| 2   | P0       | As a user | I want to add a new bathroom to GroupPoop |
+| 3   | P0       | As a user | I want to chat with someone while going about my business |
+| 4   | P0       | As a user | I want to create an account and log in |
+| 5   | P1       | As a user | I want to rate a bathroom on campus |
+| 6   | P1       | As a user | I want to make a list of my favorite bathrooms |
+| 7   | P2       | As a user | I want to delete a review |
+| 8   | P2       | As a user | I want to like a review |
+
+| #   | Solution |
+| --- | -------- |
+| 1   | To get information about a bathroom on campus, make a **GET request** at `/bathrooms/{id}`. Upon receiving the request, the server will attempt to fetch data from the **MySQL database** using a **SELECT statement** and display the information if successful. |
+| 2   | To add a new bathroom to GroupPoop, a **POST request** will be made at `/bathrooms` containing relevant information about the bathroom to add. The server will then contact the **MySQL database** and execute an **INSERT statement**, returning the object if created successfully. |
+| 3   |  |
+| 4   |  |
+| 5   |  |
+| 6   |  |
+| 7   |  |
+| 8   |  |
 
 ### Endpoints
 
