@@ -48,7 +48,7 @@ Most of us, if not all of us, have had some uncomfortable situations when needin
 
 We will be using MySql as our persisten data store.
 
-**User**
+**User** \
 `User`: Keeps track of user information. \
 create table if not exists User ( \
   user_id int not null auto_increment primary key, \
@@ -61,7 +61,7 @@ create table if not exists User ( \
   index (email, user_name) \
 )
 
-**Chat**
+**Chat** \
 `Chat`: Keeps track of a conversation between two users. \
 create table if not exists Chat ( \
   chat_id int not null auto_increment primary key, \
@@ -69,7 +69,7 @@ create table if not exists Chat ( \
   end_time datetime not null \
 )
 
-**Message** 
+**Message** \
 `Message`: Keeps track of individual message sent from one user. \
 create table if not exists Message ( \
   message_id int not null auto_increment primary key, \
@@ -78,7 +78,7 @@ create table if not exists Message ( \
   content varchar(512) not null \
 )
 
-**Bathroom**
+**Bathroom** \
 `Bathroom`: Keeps track of information relating to a bathroom. \
 create table if not exists Bathroom ( \
   bathroom_id int not null auto_increment primary key, \
@@ -93,7 +93,7 @@ create table if not exists Bathroom ( \
   num_towel_dispenser int not null \
 )
 
-**Review** 
+**Review** \
 `Review`: Keeps track of review a user makes for a bathroom. \
 create table if not exists Review ( \
   review_id int not null auto_increment primary key, \
