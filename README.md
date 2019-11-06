@@ -1,5 +1,7 @@
 # GroupPoop
 
+<br>
+
 ## Project Description
 
 The target audience for GroupPoop are primarily the **students and faculty** at the **University of Washington**, though in the future we hope this to be scaled to a wider audience. 
@@ -10,6 +12,7 @@ Our audience seeks to use GroupPoop to achieve the satisfying, entertaining brea
 
 Most of us, if not all of us, have had some uncomfortable situations when needing to use the restroom on campus. There is an inequality that exists between buildings and their bathrooms, and we want people to have the most comfortable experience when they need to relieve themselves. GroupPoop can make that happen.
 
+<br>
 
 ## Technical Specifications
 
@@ -28,3 +31,6 @@ Most of us, if not all of us, have had some uncomfortable situations when needin
 | P2 | As a user | I want to delete a post |
 | P2 | As a user | I want to like a post |
 
+### Endpoints
+
+### Appendix
