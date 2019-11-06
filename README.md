@@ -24,7 +24,6 @@ The system we create will implement a microservices architecture. All requests f
 | #   | Priority | User      | Issue |
 | --- | -------- | --------- | ----- |
 | 1   | P0       | As a user | I want to get the information about a bathroom on campus |
-| 2   | P0       | As a user | I want to add a new bathroom to GroupPoop |
 | 3   | P0       | As a user | I want to chat with someone while going about my business |
 | 4   | P0       | As a user | I want to create an account and log in |
 | 5   | P1       | As a user | I want to rate a bathroom on campus |
