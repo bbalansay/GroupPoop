@@ -31,6 +31,8 @@ Most of us, if not all of us, have had some uncomfortable situations when needin
 | 7   | P2       | As a user | I want to delete a review |
 | 8   | P2       | As a user | I want to like a review |
 
+<br>
+
 | #   | Solution |
 | --- | -------- |
 | 1   | To get information about a bathroom on campus, make a **GET request** at `/bathrooms/{id}`. Upon receiving the request, the server will attempt to fetch data from the **MySQL database** using a **SELECT statement** and display the information if successful. |
