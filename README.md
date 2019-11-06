@@ -15,6 +15,9 @@ Most of us, if not all of us, have had some uncomfortable situations when needin
 ## Technical Specifications
 
 ### Architectural Diagram
+The system we create will implement a microservices architecture. All requests from users get handled by the Gateway layer server, which then creates needs and puts them onto the RabbitMQ request queue. Microservices will be subscribed to the request queue and if they can fulfill a need, they will, and then will return the fulfilled need onto the reply queue, which the gateway layer then receives and processes. The Redis store and MySQL store will be accessible via microservices.
+
+![Architecture Diagram](img/architecture_diagram.png)
 
 ### User Stories
 
