@@ -1,5 +1,5 @@
 # GroupPoop
----
+
 ## Project Description
 
 The target audience for GroupPoop are primarily the **students and faculty** at the **University of Washington**, though in the future we hope this to be scaled to a wider audience. 
