@@ -44,64 +44,70 @@ The system we create will implement a microservices architecture. All requests f
 | 7   | To like a review of a bathroom make a **PATCH request** at `/review/{id}`. Upon receiving the request, the server will update a review from the **MySQL database** to increment the likes value. |
 
 ### Endpoints
-`/user/login`: \
-  -`POST`: `application/json`: Log in user and returns session token.
-    -`200`; `application/json`: Successfully logs in user; returns session token in `Authorization` header. \
-    -`401`: Cannot authenticate provided credentials. \
-    -`415`: Cannot decode body / received unsupported body. \
-    -`500`: Internal server error. \
-  -`DELETE`: Log out a user.
-    -`200`: Successfully logs out user. \
-    -`401`: Cannot verify session token or no session token. \
-    -`500`: Internal server error. \
+`/user/login`:
+- `POST`: `application/json`: Log in user and returns session token.
+  
+	- `200`; `application/json`: Successfully logs in user; returns session token in `Authorization` header.
+  - `401`: Cannot authenticate provided credentials.
+  - `415`: Cannot decode body / received unsupported body.
+  - `500`: Internal server error.
 
-`/user`: \
-  -`GET`: Get user information, including reviews.
-    -`200`; `application/json`: Succesfully retrieves user information, returns encoded user model in body. \
-    -`401`: Cannot verify session token or no session token. \
-    -`500`: Internal server error. \
-  -`POST`: `application/json`: Create a new user.
-    -`201`; `application/json`: Successfully creates a new user, returns encoded user model in body. \
-    -`401`: Cannot verify session token or no session token. \
-    -`415`: Cannot decode body / received unsupported body. \
-    -`500`: Internal server error. \
-  -`PATCH`: `application/json`: Update password for user.
-    -`200`; `application/json`: Successfully updates password for user. \
-    -`401`: Cannot verify session token or no session token. \
-    -`415`: Cannot decode body / received unsupported body. \
-    -`500`: Internal server error. \
-  -`DELETE`: Delete a user.
-    -`200`: Successfully deletes user. \
-    -`401`: Cannot verify session token or no session token. \
-    -`500`: Internal server error. \
+- `DELETE`: Log out a user.
+  - `200`: Successfully logs out user. 
+  - `401`: Cannot verify session token or no session token. 
+  - `500`: Internal server error.
 
-`/review`: \
-  -`GET`: Get review information
-    -`200`; `application/json`: Succesfully retrieves review information, returns encoded review model in body. \
-    -`401`: Cannot verify session token or no session token. \
-    -`500`: Internal server error. \
-  -`POST`: `application/json`: Create a new review.
-    -`201`; `application/json`: Successfully creates a new review, returns encoded review model in body. \
-    -`401`: Cannot verify session token or no session token. \
-    -`415`: Cannot decode body / received unsupported body. \
-    -`500`: Internal server error. \
-  -`PATCH`: `application/json`: Update review.
-    -`200`; `application/json`: Successfully updates review. \
-    -`401`: Cannot verify session token or no session token. \
-    -`415`: Cannot decode body / received unsupported body. \
-    -`500`: Internal server error. \
-  -`DELETE`: Delete a review.
-    -`200`: Successfully deletes review. \
-    -`401`: Cannot verify session token or no session token. \
-    -`500`: Internal server error. \
+<br>
 
-`/bathroom`: \
-  -`GET`: Get bathroom information
-    -`200`; `application/json`: Succesfully retrieves bathroom information, returns encoded review model in body. \
-    -`401`: Cannot verify session token or no session token. \
-    -`500`: Internal server error. \
+`/user`:
+- `GET`: Get user information, including reviews.
+    - `200`; `application/json`: Succesfully retrieves user information, returns encoded user model in body.
+    - `401`: Cannot verify session token or no session token.
+    - `500`: Internal server error.
+- `POST`: `application/json`: Create a new user.
+	- `201`; `application/json`: Successfully creates a new user, returns encoded user model in body. 
+	- `401`: Cannot verify session token or no session token.  
+	- `415`: Cannot decode body / received unsupported body. 
+	- `500`: Internal server error. 
+- `PATCH`: `application/json`: Update password for user.
+	- `200`; `application/json`: Successfully updates password for user. 
+	- `401`: Cannot verify session token or no session token. 
+	- `415`: Cannot decode body / received unsupported body. 
+	- `500`: Internal server error. 
+- `DELETE`: Delete a user.
+	- `200`: Successfully deletes user. 
+	- `401`: Cannot verify session token or no session token. 
+	- `500`: Internal server error. 
 
-`/chat`: websocket connection for users to chat with each other.\
+<br>
+
+`/review`: 
+  - `GET`: Get review information
+    - `200`; `application/json`: Succesfully retrieves review information, returns encoded review model in body. 
+    - `401`: Cannot verify session token or no session token. 
+    - `500`: Internal server error. 
+  - `POST`: `application/json`: Create a new review.
+    - `201`; `application/json`: Successfully creates a new review, returns encoded review model in body. 
+    - `401`: Cannot verify session token or no session token. 
+    - `415`: Cannot decode body / received unsupported body. 
+    - `500`: Internal server error. 
+  - `PATCH`: `application/json`: Update review.
+    - `200`; `application/json`: Successfully updates review. 
+    - `401`: Cannot verify session token or no session token. 
+    - `415`: Cannot decode body / received unsupported body. 
+    - `500`: Internal server error. 
+  - `DELETE`: Delete a review.
+    - `200`: Successfully deletes review. 
+    - `401`: Cannot verify session token or no session token. 
+    - `500`: Internal server error. 
+
+`/bathroom`: 
+  - `GET`: Get bathroom information
+    - `200`; `application/json`: Succesfully retrieves bathroom information, returns encoded review model in body. 
+    - `401`: Cannot verify session token or no session token. 
+    - `500`: Internal server error. 
+
+`/chat`: websocket connection for users to chat with each other.
   - User is required to connect with session token otherwise they are not logged in.
 
 
@@ -110,59 +116,64 @@ The system we create will implement a microservices architecture. All requests f
 
 We will be using MySql as our persistent data store.
 
-**User** \
-`User`: Keeps track of user information. \
-create table if not exists User ( \
-  user_id int not null auto_increment primary key, \
-  email varchar(512) not null, \
-  pass_hash varchar(128) not null, \
-  user_name varchar(256) not null, \
-  first_name varchar(128) not null, \
-  last_name varchar(128) not null, \
-  photo_url varchar(128) not null, \
-  index (email, user_name) \
-)
+`User`: Keeps track of user information. 
 
-**Chat** \
-`Chat`: Keeps track of a conversation between two users. \
-create table if not exists Chat ( \
-  chat_id int not null auto_increment primary key, \
-  start_time datetime not null, \
-  end_time datetime not null \
+```
+create table if not exists User ( 
+  user_id int not null auto_increment primary key, 
+  email varchar(512) not null, 
+  pass_hash varchar(128) not null, 
+  user_name varchar(256) not null, 
+  first_name varchar(128) not null, 
+  last_name varchar(128) not null, 
+  photo_url varchar(128) not null, 
+  index (email, user_name) 
 )
+```
 
-**Message** \
-`Message`: Keeps track of individual message sent from one user. \
-create table if not exists Message ( \
-  message_id int not null auto_increment primary key, \
-  FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE not null, \
-  FOREIGN KEY (chat_id) REFERENCES Chat(chat_id) ON DELETE CASCADE not null, \
-  content varchar(512) not null \
+`Chat`: Keeps track of a conversation between two users. 
+```
+create table if not exists Chat ( 
+  chat_id int not null auto_increment primary key, 
+  start_time datetime not null, 
+  end_time datetime not null 
 )
+```
 
-**Bathroom** \
-`Bathroom`: Keeps track of information relating to a bathroom. \
-create table if not exists Bathroom ( \
-  bathroom_id int not null auto_increment primary key, \
-  name varchar(128) not null, \
-  description varchar(512) not null, \
-  location varchar(128) not null, \
-  num_sinks int not null, \
-  num_toilets int not null, \
-  num_urinals int not null, \
-  num_trash_cans int not null, \
-  num_hand_dryers int not null, \
-  num_towel_dispenser int not null \
+`Message`: Keeps track of individual message sent from one user. 
+```
+create table if not exists Message ( 
+  message_id int not null auto_increment primary key, 
+  FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE not null, 
+  FOREIGN KEY (chat_id) REFERENCES Chat(chat_id) ON DELETE CASCADE not null, 
+  content varchar(512) not null 
 )
+```
 
-**Review** \
-`Review`: Keeps track of review a user makes for a bathroom. \
-create table if not exists Review ( \
-  review_id int not null auto_increment primary key, \
-  FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE not null, \
-  FOREIGN KEY (bathroom_id) REFERENCES Bathroom(bathroom_id) ON DELETE CASCADE not null, \
-  content varchar(512) not null, \
-  time datetime not null \
+`Bathroom`: Keeps track of information relating to a bathroom. 
+```
+create table if not exists Bathroom ( 
+  bathroom_id int not null auto_increment primary key, 
+  name varchar(128) not null, 
+  description varchar(512) not null, 
+  location varchar(128) not null, 
+  num_sinks int not null, 
+  num_toilets int not null, 
+  num_urinals int not null, 
+  num_trash_cans int not null, 
+  num_hand_dryers int not null, 
+  num_towel_dispenser int not null 
 )
+```
 
+`Review`: Keeps track of review a user makes for a bathroom. 
+```
+create table if not exists Review ( 
+  review_id int not null auto_increment primary key, 
+  FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE not null, 
+  FOREIGN KEY (bathroom_id) REFERENCES Bathroom(bathroom_id) ON DELETE CASCADE not null, 
+  content varchar(512) not null, 
+  time datetime not null 
+)
+```
 
