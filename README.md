@@ -103,12 +103,16 @@ The system we create will implement a microservices architecture. All requests f
 	- `401`: Cannot verify session token or no session token. 
 	- `500`: Internal server error. 
 
+<br>
+
 `/bathroom`: 
 
 - `GET`: Get bathroom information
 	- `200`; `application/json`: Succesfully retrieves bathroom information, returns encoded review model in body. 
 	- `401`: Cannot verify session token or no session token. 
 	- `500`: Internal server error. 
+
+<br>
 
 `/chat`:
 - Websocket connection for users to chat with each other.
@@ -136,6 +140,8 @@ create table if not exists User (
 )
 ```
 
+<br>
+
 `Chat`: Keeps track of a conversation between two users. 
 ```
 create table if not exists Chat ( 
@@ -144,6 +150,8 @@ create table if not exists Chat (
   end_time datetime not null 
 )
 ```
+
+<br>
 
 `Message`: Keeps track of individual message sent from one user. 
 ```
@@ -154,6 +162,8 @@ create table if not exists Message (
   content varchar(512) not null 
 )
 ```
+
+<br>
 
 `Bathroom`: Keeps track of information relating to a bathroom. 
 ```
@@ -170,6 +180,8 @@ create table if not exists Bathroom (
   num_towel_dispenser int not null 
 )
 ```
+
+<br>
 
 `Review`: Keeps track of review a user makes for a bathroom. 
 ```
