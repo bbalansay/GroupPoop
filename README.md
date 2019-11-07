@@ -107,7 +107,8 @@ The system we create will implement a microservices architecture. All requests f
     - `401`: Cannot verify session token or no session token. 
     - `500`: Internal server error. 
 
-`/chat`: websocket connection for users to chat with each other.
+`/chat`: 
+	- Websocket connection for users to chat with each other.
   - User is required to connect with session token otherwise they are not logged in.
 
 
