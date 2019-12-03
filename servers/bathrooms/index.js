@@ -15,6 +15,11 @@ const dbUser = process.env.DBUSER
 const dbPass = process.env.MYSQL_ROOT_PASSWORD
 const dbName = process.env.DBNAME
 
+app.post("/review", makeReview(req, res));
+app.get("/review/:reviewID", getReview(req, res));
+app.patch("/review/:reviewID", editReview(req, res));
+app.delete("/review/:reviewID", deleteReview(req, res));
+
 async function getDB() {
     let db = await mysql.createConnection({
         host: dbHost,
@@ -36,7 +41,8 @@ function checkAuth(req, res) {
     SUPPORTED METHODS:
     - POST
 */
-app.post("/review/:reviewID", async (req, res) => {
+
+async function makeReview(req, res) {
     checkAuth(req, res)
     let db;
     let reviewID = req.params.reviewID;
@@ -47,17 +53,17 @@ app.post("/review/:reviewID", async (req, res) => {
 
         let reviewJSON = req.body;
         let rows = await db.query(`
-            INSERT INTO Review (user_id, bathroom_id, content, time)
-            VALUES (${user.id}, ${reviewJSON.bathroom_id}, ${reviewJSON.content}, NOW())
+            INSERT INTO tblReview (UserID, BathroomID, Content, Time)
+            VALUES (${user.id}, ${reviewJSON.BathroomID}, ${reviewJSON.Content}, NOW())
         `)
 
         if (db) db.end();
-        return res.status(200).json(channels);
+        return res.status(201).json(reviewJSON);
     } catch {
         if (db) db.end();
         return res.status(500).json( {"error" : err.message })
     }
-})
+}
 
 /*
     RESOURCE PATH: /review:reviewID
@@ -66,7 +72,7 @@ app.post("/review/:reviewID", async (req, res) => {
     - PATCH
     - DELETE
 */
-app.get("/review/:reviewID", async (req, res) => {
+async function getReview(req, res) {
     checkAuth(req, res)
     let db;
     let reviewID = req.params.reviewID;
@@ -76,7 +82,7 @@ app.get("/review/:reviewID", async (req, res) => {
         let user = JSON.parse(req.get("X-User"))
 
         let result = await db.query(`
-            SELECT * FROM Review
+            SELECT * FROM tblReview
             WHERE review_id = ${reviewID}
         `)
         if (result.length != 1) {
@@ -89,9 +95,9 @@ app.get("/review/:reviewID", async (req, res) => {
         if (db) db.end();
         return res.status(500).json( {"error" : err.message })
     }
-})
+}
 
-app.patch("/review/:reviewID", async (req, res) => {
+async function editReview(req, res) {
     checkAuth(req, res)
     let db;
     let reviewID = req.params.reviewID;
@@ -128,9 +134,9 @@ app.patch("/review/:reviewID", async (req, res) => {
         if (db) db.end();
         return res.status(500).json({"error": err.message})
     }
-})
+}
 
-app.delete("/review/:reviewID", async (req,res) => {
+async function deleteReview(req,res) {
     checkAuth(req,res)
     let db;
     let reviewID = req.params.reviewID;
@@ -164,7 +170,7 @@ app.delete("/review/:reviewID", async (req,res) => {
         if (db) db.end();
         return res.status(500).send("unexpected error: " + err.message)
     }
-})
+}
 
 /*
   RESOURCE PATH: /bathroom/:bathroomID
