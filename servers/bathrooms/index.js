@@ -3,10 +3,18 @@
 const express = require("express");
 const mysql = require("promise-mysql");
 
+require("./middleware/checkAuth")
+
+require("./handlers/getAllBathrooms")
+require("./handlers/getBathroom")
+require("./handlers/makeReview")
+require("./handlers/editReview")
+require("./handlers/deleteReview")
+
 const app = express();
 app.use(express.json())
 
-const addr = process.env.MESSAGESPORT || ":80";
+const addr = process.env.BATHROOMPORT || ":80";
 const [host, port] = addr.split(":")
 
 const dbHost = process.env.DBHOST
