@@ -1,7 +1,7 @@
 "use strict"
 
-const express = require("express");
-const mysql = require("promise-mysql");
+// const express = require("express");
+// const mysql = require("promise-mysql");
 
 // const app = express();
 // app.use(express.json())
@@ -40,7 +40,7 @@ function checkAuth(req, res) {
     - DELETE
 */
 app.get("/review/:reviewID", async (req, res) => {
-    checkAuth(req,res)
+    checkAuth(req, res)
     let db;
     let reviewID = req.params.reviewID;
 
@@ -61,6 +61,23 @@ app.get("/review/:reviewID", async (req, res) => {
     } catch (err) {
         if (db) db.end();
         return res.status(500).json( {"error" : err.message })
+    }
+})
+
+app.post("/review/:reviewID", async (req, res) => {
+    checkAuth(req, res)
+    let db;
+    let reviewID = req.params.reviewID;
+
+    try {
+        db = await getDB()
+        let user = JSON.parse(req.get("X-User"))
+
+        let reviewJSON = req.body;
+        let rows = await db.query(`
+            INSERT INTO Review (content, time)
+            VALUES ('${reviewJSON.content}, NOW())
+        `)
     }
 })
 
