@@ -29,8 +29,46 @@ async function getDB() {
 function checkAuth(req, res) {
     if (req.get("X-User") == undefined) 
       return res.status(401).json({ "message": "User must be authenticated" })
-  } 
+} 
 
+/*
+    RESOURCE PATH: /review
+    SUPPORTED METHODS:
+    - GET
+    - POST
+    - PATCH
+    - DELETE
+*/
+app.get("/review/:reviewID", async (req, res) => {
+    checkAuth(req,res)
+    let db;
+    let reviewID = req.params.reviewID;
+
+    try {
+        db = await getDB()
+        let user = JSON.parse(req.get("X-User"))
+
+        let result = await db.query(`
+            SELECT * FROM Review
+            WHERE review_id = ${reviewID}
+        `)
+        if (result.length != 1) {
+            return res.status(403).send("Review does not exist")
+        }
+
+        if (db) db.end();
+        return res.status(200).json(result)
+    } catch (err) {
+        if (db) db.end();
+        return res.status(500).json( {"error" : err.message })
+    }
+})
+
+/*
+  RESOURCE PATH: /bathroom/:bathroomID
+  SUPPORTED METHODS:
+  - GET
+*/
 app.get("/bathroom/:bathroomID", async (req, res) => {
     checkAuth(req, res)
     let db;
@@ -41,7 +79,7 @@ app.get("/bathroom/:bathroomID", async (req, res) => {
         let user = JSON.parse(req.get("X-User"))
 
         let result = await db.query(`
-            Select * FROM Bathroom
+            SELECT * FROM Bathroom
             WHERE bathroom_id = ${bathroomID}
         `)
         if (result.length != 1) {
