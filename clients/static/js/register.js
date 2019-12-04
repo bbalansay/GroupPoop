@@ -1,6 +1,6 @@
 $(document).ready(() => {
   $("#signin").click(() => {
-    window.location.href = "signin.html";
+    window.location.replace("signin.html");
   });
 
   $("#submit").click((e) => {
@@ -25,7 +25,7 @@ $(document).ready(() => {
       .then(checkStatus)
       .then(redirect)
       .catch(() => {
-        setTimeout(() => $("#alert").html(`<br><div class="alert alert-danger" role="alert">Unable to register an account with these credentials.</div>`), 500);
+        setTimeout(() => $("#alert").html(`<br><div class="alert alert-danger" role="alert">Unable to register an account with these credentials.</div>`), 1000);
         setTimeout(() => $("#alert").html(""), 5000);
       })
   })
@@ -40,5 +40,5 @@ const checkStatus = (response) => {
 }
 
 const redirect = () => {
-  setTimeout(() => window.location.replace("signin.html"), 500);
+  setTimeout(() => window.location.replace("signin.html"), 1000);
 }
