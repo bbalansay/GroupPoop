@@ -1,4 +1,6 @@
-async function deleteReview(req, res) {
+require("../middleware/getDB")
+
+export async function deleteReview(req, res) {
     let db;
     let reviewID = req.params.reviewID;
     let userID = req.params.userID;

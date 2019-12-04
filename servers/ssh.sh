@@ -3,6 +3,7 @@ docker rm -f apiGateway
 docker rm -f redisServer
 docker rm -f database
 docker rm -f bathroomsServer
+docker rm -f authServer
 docker network rm ServerNetwork
 
 docker volume rm $(docker volume ls -qf dangling=true)
@@ -10,6 +11,7 @@ docker volume rm $(docker volume ls -qf dangling=true)
 docker pull bowerw2/grouppoop_api_gateway
 docker pull bowerw2/grouppoop_database
 docker pull bowerw2/grouppoop_bathrooms_server
+docker pull bowerw2/grouppoop_auth_server
 
 
 export TLSCERT=/etc/letsencrypt/live/api.grouppoop.icu/fullchain.pem
@@ -19,11 +21,19 @@ export DSN="root:$MYSQL_ROOT_PASSWORD@tcp(database:3306)/users"
 export REDISADDR="redisServer:6379"
 export SESSIONKEY=$(echo -n "Message" | openssl dgst -sha256 -hmac "secret" -binary | base64)
 export BATHROOMADDR="http://bathroomsServer:80"
+export AUTHADDR="http://authServer:80"
 
 
 docker network create ServerNetwork
 
 docker run -d --name redisServer --network ServerNetwork redis
+
+docker run -d \
+--name database \
+--network ServerNetwork \
+-e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD \
+-e MYSQL_DATABASE=users \
+bowerw2/grouppoop_database
 
 docker run -d \
 --name bathroomsServer \
@@ -38,11 +48,10 @@ docker run -d \
 bowerw2/grouppoop_bathrooms_server
 
 docker run -d \
---name database \
+--name authServer \
 --network ServerNetwork \
--e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD \
--e MYSQL_DATABASE=users \
-bowerw2/grouppoop_database
+-e AUTHPORT=":80" \
+bowerw2/grouppoop_auth_server
 
 docker run -d \
 -p 443:443 \
@@ -56,4 +65,5 @@ docker run -d \
 -e REDISADDR=$REDISADDR \
 -e SESSIONKEY=$SESSIONKEY \
 -e BATHROOMADDR=$BATHROOMADDR \
+-e AUTHADDR=$AUTHADDR \
 bowerw2/grouppoop_api_gateway

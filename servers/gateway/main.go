@@ -2,7 +2,7 @@ package main
 
 import (
 	"GroupPoop/servers/gateway/sessions"
-	"GroupPoop/servers/gateway/handlers"
+	"GroupPoop/servers/gateway/middleware"
 	"GroupPoop/servers/gateway/proxy"
 	"os"
 	"fmt"
@@ -50,7 +50,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Receive address(es) for messages microservice(s) and insert into CustomDirector
+	// Receive address(es) for bathrooms microservice(s) and insert into CustomDirector
 	bathroomsAddr := os.Getenv("BATHROOMADDR")
 	bathroomsAddrs := strings.Split(bathroomsAddr, ",")
 	bathroomsAddrURLs := []*url.URL{}
@@ -64,14 +64,30 @@ func main() {
 	}
 	bathroomsProxy := &httputil.ReverseProxy{Director: proxy.CustomDirector(bathroomsAddrURLs)}
 
+	// Receive address(es) for auth microservice(s) and insert into CustomDirector
+	authAddr := os.Getenv("AUTHADDR")
+	authAddrs := strings.Split(authAddr, ",")
+	authAddrURLs := []*url.URL{}
+	for i, _ := range authAddrs {
+		authAddrURL, err := url.Parse(authAddrs[i])
+		if err != nil {
+			fmt.Printf("error parsing messages URLs: %v\n", err)
+			os.Exit(1)
+		}
+		authAddrURLs = append(authAddrURLs, authAddrURL)
+	}
+	authProxy := &httputil.ReverseProxy{Director: proxy.CustomDirector(authAddrURLs)}
+
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", HelloServer)
+	mux.Handle("/login", authProxy)
+	mux.Handle("/login/", authProxy)
 	mux.Handle("/bathroom", bathroomsProxy)
 	mux.Handle("/bathroom/", bathroomsProxy)
 	mux.Handle("user/:userID/review/", bathroomsProxy)
 
-	wrappedMux := handlers.NewEnsureCORS(handlers.NewEnsureAuth(mux, signingKey, redisStore))
+	wrappedMux := middleware.NewEnsureCORS(middleware.NewEnsureAuth(mux, signingKey, redisStore))
 	log.Printf("server is listening at https://%s", addr)
 	log.Fatal(http.ListenAndServeTLS(addr, tlsCertPath, tlsKeyPath, wrappedMux))
 

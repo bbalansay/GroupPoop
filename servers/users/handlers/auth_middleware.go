@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"GroupPoop/servers/gateway/models/users"
-	"GroupPoop/servers/gateway/sessions"
+	"assignments-zhouyifan0904/servers/gateway/models/users"
+	"assignments-zhouyifan0904/servers/gateway/sessions"
 	"encoding/json"
 	"net/http"
 )
@@ -17,9 +17,10 @@ type EnsureAuth struct {
 }
 
 func (ea *EnsureAuth) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	authHeader := r.Header.Get(headerAuthorization)
 	delete(r.Header, "X-User")
 
-	if ((r.URL.Path != "/login" && r.Method == http.MethodGet) || (r.URL.Path != "/user" && r.Method == http.MethodPost)) {
+	if authHeader != "" {
 		user := &users.User{}
 		_, err := sessions.GetState(r, ea.signingKey, ea.sessionStore, user)
 		if err != nil {

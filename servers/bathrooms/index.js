@@ -40,12 +40,19 @@ app.get("/bathroom", getAllBathrooms(req, res));
 app.get("/bathroom/:bathroomID", getBathroom(req, res));
 
 // create a review for a specific bathroom
+<<<<<<< HEAD
 app.post("/bathroom/:bathroomID/review", checkAuth(req, res), makeReview(req, res));
 
 app.patch("/user/:userID/review/:reviewID", checkAuth(req, res), editReview(req, res));
 app.delete("/user/:userID/review/:reviewID", checkAuth(req, res), deleteReview(req, res));
 
 
+=======
+app.post("/bathroom/:bathroomID/review", checkAuth(req, res, next), makeReview(req, res));
+
+app.patch("/user/:userID/review/:reviewID", checkAuth(req, res, next), editReview(req, res));
+app.delete("/user/:userID/review/:reviewID", checkAuth(req, res, next), deleteReview(req, res));
+>>>>>>> 1638dafc850a295e7a8f7f2763d1f201a961451c
 
 app.listen(port, host, () => {
     console.log(`server is listening at http://${addr}...`)

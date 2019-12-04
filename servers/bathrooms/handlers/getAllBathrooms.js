@@ -1,4 +1,6 @@
-async function getAllBathrooms(req, res) {
+require("../middleware/getDB")
+
+export async function getAllBathrooms(req, res) {
     let db; 
     
     try {
