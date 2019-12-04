@@ -96,10 +96,14 @@ func (ctx *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Re
 			return
 		}
 
+		//retrieve reviews associated with user
+		reviews, _ := ctx.UserStore.GetReviews(id)
+
 		// Write response
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(user)
+		json.NewEncoder(w).Encode(reviews)
 	case http.MethodPatch: // If request method is PATCH
 		// Retrieve user from store
 		user := &users.User{}

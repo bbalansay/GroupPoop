@@ -50,6 +50,16 @@ type Updates struct {
 	LastName  string `json:"lastName"`
 }
 
+type Review struct {
+	ID			int64  `json:"id"`
+	UserID		int64  `json:"userID"`
+	BathroomID  int64  `json:"bathroomID"`
+	Score		string `json:"score"`
+	Content		string `json:"content"`
+	CreatedAt	string `json:"createdAt"`
+	EditedAt	string `json:"editedAt"`
+}
+
 //Validate validates the new user and returns an error if
 //any of the validation rules fail, or nil if its valid
 func (nu *NewUser) Validate() error {
