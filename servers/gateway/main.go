@@ -1,6 +1,7 @@
 package main
 
 import (
+	"GroupPoop/servers/gateway/handlers"
 	"GroupPoop/servers/gateway/sessions"
 	"GroupPoop/servers/gateway/middleware"
 	"GroupPoop/servers/gateway/proxy"
@@ -34,6 +35,10 @@ func main() {
 	if len(addr) == 0 {
 		addr = ":443"
 	}
+
+	ctx := handlers.NewHandlerContext(signingKey, redisStore, handlers.SocketStore{
+		Connections: make(map[int64]*websocket.Conn),
+	})
 
 	tlsKeyPath := os.Getenv("TLSKEY")
 	tlsCertPath := os.Getenv("TLSCERT")
@@ -102,6 +107,7 @@ func main() {
 	mux.Handle("/bathroom", bathroomsProxy)
 	mux.Handle("/bathroom/", bathroomsProxy)
 	mux.Handle("user/:userID/review/", bathroomsProxy)
+	mux.HandleFunc("/chat", ctx.WebsocketConnectionHandler)
 
 	wrappedMux := middleware.NewEnsureCORS(middleware.NewEnsureAuth(mux, signingKey, redisStore))
 	log.Printf("server is listening at https://%s", addr)
