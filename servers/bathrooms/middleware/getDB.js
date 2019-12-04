@@ -5,15 +5,23 @@ const dbPass = process.env.MYSQL_ROOT_PASSWORD
 const dbName = process.env.DBNAME
 
 async function getDB(req, res, next) {
-    let db = await mysql.createConnection({
-        host: dbHost,
-        port: dbPort,
-        user: dbUser,
-        password: dbPass,
-        database: dbName
-    });
-    req.db = db;
-    next()
+    try {
+        let db = await mysql.createConnection({
+            host: dbHost,
+            port: dbPort,
+            user: dbUser,
+            password: dbPass,
+            database: dbName
+        });
+
+        if (db) {
+            req.db = db;
+            next()
+        }
+    } catch (err) {
+        if (db) db.end();
+        return res.status(500).send("unexpected error: " + err.message)
+    }
 }
 
 module.exports = {

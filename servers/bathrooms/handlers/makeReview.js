@@ -17,7 +17,7 @@ async function makeReview(req, res) {
 
         if (db) db.end();
         return res.status(201).json(reviewJSON);
-    } catch {
+    } catch (err) {
         if (db) db.end();
         return res.status(500).json( {"error" : err.message })
     }

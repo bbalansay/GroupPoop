@@ -37,7 +37,7 @@ async function editReview(req, res) {
         }
         if (db) db.end();
         return res.status(201).json(result[0])
-    } catch {
+    } catch(err) {
         if (db) db.end();
         return res.status(500).json({"error": err.message})
     }

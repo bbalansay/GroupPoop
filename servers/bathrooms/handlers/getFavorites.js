@@ -16,7 +16,7 @@ async function getFavorites(req, res) {
 
         if (db) db.end();
         return res.status(200).json({"favorites": bathroomIDs});
-    } catch {
+    } catch (err) {
         if (db) db.end();
         return res.status(500).json( {"error" : err.message })
     }
