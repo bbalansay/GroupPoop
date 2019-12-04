@@ -1,6 +1,6 @@
 $(document).ready(() => {
   $("#register").click(() => {
-    window.location.href = "register.html";
+    window.location.replace("register.html");
   });
 
   $("#submit").click((e) => {
@@ -24,7 +24,7 @@ $(document).ready(() => {
       .then(saveProfile)
       .then(redirect)
       .catch(() => {
-        setTimeout(() => $("#alert").html(`<br><div class="alert alert-danger" role="alert">Could not sign in using these credentials.</div>`), 500);
+        setTimeout(() => $("#alert").html(`<br><div class="alert alert-danger" role="alert">Could not sign in using these credentials.</div>`), 1000);
         setTimeout(() => $("#alert").html(""), 5000);
       })
   })
@@ -42,7 +42,6 @@ const saveSession = (response) => {
   for (let pair of response.headers.entries()) {
     if (pair[0] == "authorization") {
       sessionStorage.auth = pair[1];
-      console.log("Set sessionStorage.auth to: " + pair[1])
       return response;
     }
   }
@@ -52,10 +51,9 @@ const saveSession = (response) => {
 
 const saveProfile = (json) => {
   sessionStorage.profile = JSON.stringify(json)
-  console.log("Set sessionStorage.profile to: " + JSON.stringify(json))
   return json
 }
 
 const redirect = () => {
-  setTimeout(() => window.location.replace("../index.html"), 500);
+  setTimeout(() => window.location.replace("../index.html"), 1000);
 }
