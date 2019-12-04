@@ -3,12 +3,13 @@
 const express = require("express");
 const mysql = require("promise-mysql");
 
-require("./middleware/checkAuth")
-require("./handlers/getAllBathrooms")
-require("./handlers/getBathroom")
-require("./handlers/makeReview")
-require("./handlers/editReview")
-require("./handlers/deleteReview")
+const auth = require("./middleware/checkAuth")
+const db = require("./middleware/getDB")
+const allBath = require("./handlers/getAllBathrooms")
+const getBath = require("./handlers/getBathroom")
+const makeRev = require("./handlers/makeReview")
+const editRev = require("./handlers/editReview")
+const delRev = require("./handlers/deleteReview")
 
 const app = express();
 app.use(express.json())
@@ -16,35 +17,17 @@ app.use(express.json())
 const addr = process.env.BATHROOMPORT || ":80";
 const [host, port] = addr.split(":")
 
-const dbHost = process.env.DBHOST
-const dbPort = process.env.DBPORT
-const dbUser = process.env.DBUSER
-const dbPass = process.env.MYSQL_ROOT_PASSWORD
-const dbName = process.env.DBNAME
-
-async function getDB() {
-    let db = await mysql.createConnection({
-        host: dbHost,
-        port: dbPort,
-        user: dbUser,
-        password: dbPass,
-        database: dbName
-    });
-    return db;
-}
-
-let db = getDB();
 //get all the bathrooms in the database
-app.get("/bathroom", checkAuth(req, res, next), getAllBathrooms(req, res, db));
+app.get("/bathroom", checkAuth(req, res, next), getDB(req, res, next), getAllBathrooms(req, res));
 
 //gets a specific bathroom and all reviews
-app.get("/bathroom/:bathroomID", checkAuth(req, res, next), getBathroom(req, res, db));
+app.get("/bathroom/:bathroomID", checkAuth(req, res, next), getDB(req, res, next), getBathroom(req, res));
 
 // create a review for a specific bathroom
-app.post("/bathroom/:bathroomID/review", checkAuth(req, res, next), makeReview(req, res, db));
+app.post("/bathroom/:bathroomID/review", checkAuth(req, res, next), getDB(req, res, next), makeReview(req, res));
 
-app.patch("/user/:userID/review/:reviewID", checkAuth(req, res, next), editReview(req, res, db));
-app.delete("/user/:userID/review/:reviewID", checkAuth(req, res, next), deleteReview(req, res, db));
+app.patch("/user/:userID/review/:reviewID", checkAuth(req, res, next), getDB(req, res, next), editReview(req, res));
+app.delete("/user/:userID/review/:reviewID", checkAuth(req, res, next), getDB(req, res, next), deleteReview(req, res));
 
 app.listen(port, host, () => {
     console.log(`server is listening at http://${addr}...`)

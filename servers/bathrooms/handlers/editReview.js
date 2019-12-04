@@ -42,3 +42,7 @@ export async function editReview(req, res, db) {
         return res.status(500).json({"error": err.message})
     }
 }
+
+module.exports = {
+    editReview
+}

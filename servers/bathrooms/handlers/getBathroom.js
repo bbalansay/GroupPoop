@@ -27,3 +27,7 @@ export async function getBathroom(req, res, db) {
         return res.status(500).json( {"error" : err.message })
     }
 }
+
+module.exports = {
+    getBathroom
+}
