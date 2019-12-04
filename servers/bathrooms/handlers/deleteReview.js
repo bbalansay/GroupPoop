@@ -33,3 +33,7 @@ export async function deleteReview(req, res, db) {
         return res.status(500).send("unexpected error: " + err.message)
     }
 }
+
+module.exports = {
+    deleteReview
+}

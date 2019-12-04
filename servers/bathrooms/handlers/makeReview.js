@@ -22,3 +22,7 @@ export async function makeReview(req, res, db) {
         return res.status(500).json( {"error" : err.message })
     }
 }
+
+module.exports = {
+    makeReview
+}
