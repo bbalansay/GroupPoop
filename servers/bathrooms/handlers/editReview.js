@@ -17,7 +17,7 @@ async function editReview(req, res, {getDBConn}) {
         }
 
         // check to see if user is author of review
-        if (userID != result[0].UserID) {
+        if (user.id != result[0].UserID) {
             return res.status(403).json({"message": "You are not the creator of this review!"})
         }
 
