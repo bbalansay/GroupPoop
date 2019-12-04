@@ -27,17 +27,22 @@ async function editReview(req, res, {getDBConn}) {
                 WHERE ID = ${reviewID}
             `)
             await db.query(`
-                UPDATE Review SET Content = '${req.body.contnet}'
+                UPDATE tblReview SET Content = '${req.body.contnet}'
                 WHERE ID = ${reviewID}
             `)
             await db.query(`
-                UPDATE Review SET EditedAt = NOW()
+                UPDATE tblReview SET EditedAt = NOW()
                 WHERE ID = ${reviewID}
             `)
         }
 
+        let newResult = await db.query(`
+            SELECT * FROM tblReview
+            WHERE ID = ${reviewID}
+        `)
+
         res.set("Content-Type", "application/json")
-        return res.status(201).json(result[0])
+        return res.status(201).json(newResult[0])
     } catch(err) {
         return res.status(500).json({"error": err.message})
     }
