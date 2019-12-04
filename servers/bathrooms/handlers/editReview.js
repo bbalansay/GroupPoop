@@ -1,4 +1,4 @@
-export async function editReview(req, res, db) {
+async function editReview(req, res, db) {
     // let db;
     let reviewID = req.params.reviewID;
     let userID = req.params.userID;

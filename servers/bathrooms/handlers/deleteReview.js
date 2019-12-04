@@ -1,4 +1,4 @@
-export async function deleteReview(req, res, db) {
+async function deleteReview(req, res, db) {
     // let db;
     let reviewID = req.params.reviewID;
     let userID = req.params.userID;

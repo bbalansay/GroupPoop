@@ -1,4 +1,4 @@
-export async function getAllBathrooms(req, res, db) {
+async function getAllBathrooms(req, res, db) {
     // let db; 
     
     try {

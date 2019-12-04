@@ -1,4 +1,4 @@
-export async function makeReview(req, res, db) {
+async function makeReview(req, res, db) {
     // let db;
     let bathroomID = req.params.bathroomID;
 

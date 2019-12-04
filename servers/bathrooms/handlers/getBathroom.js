@@ -1,4 +1,4 @@
-export async function getBathroom(req, res, db) {
+async function getBathroom(req, res, db) {
     // let db;
     let bathroomID = req.params.bathroomID;
 
