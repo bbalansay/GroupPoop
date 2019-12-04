@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"assignments-zhouyifan0904/servers/gateway/models/users"
-	"assignments-zhouyifan0904/servers/gateway/sessions"
+	"GroupPoop/servers/users/models/users"
+	"GroupPoop/servers/users/sessions"
 )
 
 //TODO: define a handler context struct that
@@ -17,12 +17,11 @@ type HandlerContext struct {
 	SigningKey   string
 	SessionStore sessions.Store
 	UserStore    users.Store
-	SocketStore  SocketStore
 }
 
 //NewHandlerContext constructs a new HandlerContext,
 //ensuring that the dependencies are valid values
-func NewHandlerContext(SigningKey string, SessionStore sessions.Store, UserStore users.Store, SocketStore SocketStore) *HandlerContext {
+func NewHandlerContext(SigningKey string, SessionStore sessions.Store, UserStore users.Store) *HandlerContext {
 	if SigningKey == "" {
 		panic("empty SigningKey")
 	}
@@ -35,9 +34,5 @@ func NewHandlerContext(SigningKey string, SessionStore sessions.Store, UserStore
 		panic("nil UserStore!")
 	}
 
-	if &SocketStore == nil {
-		panic("nil SocketStore!")
-	}
-
-	return &HandlerContext{SigningKey, SessionStore, UserStore, SocketStore}
+	return &HandlerContext{SigningKey, SessionStore, UserStore}
 }

@@ -78,11 +78,27 @@ func main() {
 	}
 	authProxy := &httputil.ReverseProxy{Director: proxy.CustomDirector(authAddrURLs)}
 
+	// Receive address(es) for useres microservice(s) and insert into CustomDirector
+	usersAddr := os.Getenv("USERSADDR")
+	usersAddrs := strings.Split(usersAddr, ",")
+	usersAddrURLs := []*url.URL{}
+	for i, _ := range usersAddrs {
+		usersAddrURL, err := url.Parse(usersAddrs[i])
+		if err != nil {
+			fmt.Printf("error parsing messages URLs: %v\n", err)
+			os.Exit(1)
+		}
+		usersAddrURLs = append(usersAddrURLs, usersAddrURL)
+	}
+	usersProxy := &httputil.ReverseProxy{Director: proxy.CustomDirector(usersAddrURLs)}
+
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", HelloServer)
 	mux.Handle("/login", authProxy)
 	mux.Handle("/login/", authProxy)
+	mux.Handle("/user", usersProxy)
+	mux.Handle("/user/", usersProxy)
 	mux.Handle("/bathroom", bathroomsProxy)
 	mux.Handle("/bathroom/", bathroomsProxy)
 	mux.Handle("user/:userID/review/", bathroomsProxy)
