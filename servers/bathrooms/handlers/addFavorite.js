@@ -20,7 +20,7 @@ async function addFavorite(req, res, {getDBConn}) {
 
         let rows = await db.query(`
             INSERT INTO tblFavorites (UserID, BathroomID)
-            VALUES (${user.id}, ${bathroomID})
+            VALUES (${user.id}, ${bathroomID});
         `)
 
         return res.status(201).json({"message": "Favorite added."});
