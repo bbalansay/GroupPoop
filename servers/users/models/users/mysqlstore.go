@@ -160,3 +160,21 @@ func (ms *MySQLStore) Delete(id int64) error {
 	return nil
 }
 
+func(ms *MySQLStore) GetReviews(userID int64) ([]Review, error) {
+	rows, err :=  ms.db.Query("SELECT * FROM tblReview WHERE UserID = ?" userID)
+	if err != nil {
+		return nil, err
+	}
+
+	reviews := []Review;
+	for rows.Next() {
+		review = Review{}
+		if err := rows.Scan(&review.ID, &review.UserID, &review.BathroomID, &review.Score,
+			&review.Content, &review.CreatedAt, &review.EditedAt); err != nil {
+			return nil, err
+		}
+		reviews = append(reviews, review)
+	}
+
+	return reviews, nil
+}
