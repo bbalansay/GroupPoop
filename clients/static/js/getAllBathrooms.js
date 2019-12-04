@@ -13,14 +13,6 @@ $(document).ready(() => {
   })
 })
 
-const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  } else {
-    return Promise.reject(new Error());
-  }
-}
-
 const populateBathrooms = (bathrooms) => {
   for (let bathroom of bathrooms) {
     let card = document.createElement("div")

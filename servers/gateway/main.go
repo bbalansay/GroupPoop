@@ -107,8 +107,8 @@ func main() {
 	mux.Handle("/user/", usersProxy)
 	mux.Handle("/bathroom", bathroomsProxy)
 	mux.Handle("/bathroom/", bathroomsProxy)
-	mux.Handle("/user/:userID/review/", bathroomsProxy)
-	mux.Handle("/user/:userID/favorites", bathroomsProxy)
+	mux.Handle("/review", bathroomsProxy)
+	mux.Handle("/favorites", bathroomsProxy)
 	mux.HandleFunc("/chat", ctx.WebsocketConnectionHandler)
 
 	wrappedMux := middleware.NewEnsureCORS(middleware.NewEnsureAuth(mux, signingKey, redisStore))

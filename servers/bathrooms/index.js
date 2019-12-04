@@ -45,11 +45,11 @@ app.get("/bathroom/:bathroomID", auth.checkAuth, RequestWrapper(getBath.getBathr
 // create a review for a specific bathroom
 app.post("/bathroom/:bathroomID/review", auth.checkAuth, RequestWrapper(makeRev.makeReview, { getDBConn}));
 
-app.patch("/user/:userID/review/:reviewID", auth.checkAuth, RequestWrapper(editRev.editReview, { getDBConn}));
-app.delete("/user/:userID/review/:reviewID", auth.checkAuth, RequestWrapper(delRev.deleteReview, { getDBConn}));
+app.patch("/review/:reviewID", auth.checkAuth, RequestWrapper(editRev.editReview, { getDBConn}));
+app.delete("/review/:reviewID", auth.checkAuth, RequestWrapper(delRev.deleteReview, { getDBConn}));
 
-app.get("/user/:userID/favorites", auth.checkAuth, RequestWrapper(getFav.getFavorites, { getDBConn}));
-app.post("/user/:userID/favorites", auth.checkAuth, RequestWrapper(addFav.addFavorite, { getDBConn}));
+app.get("/favorites", auth.checkAuth, RequestWrapper(getFav.getFavorites, { getDBConn}));
+app.post("/favorites", auth.checkAuth, RequestWrapper(addFav.addFavorite, { getDBConn}));
 
 async function main() {
     try {
