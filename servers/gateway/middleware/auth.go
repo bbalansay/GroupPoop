@@ -19,7 +19,7 @@ type EnsureAuth struct {
 func (ea *EnsureAuth) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	delete(r.Header, "X-User")
 
-	if ((r.URL.Path != "/login" && r.Method == http.MethodGet) || (r.URL.Path != "/user" && r.Method == http.MethodPost)) {
+	if !((r.URL.Path == "/login" && r.Method == http.MethodPost) || (r.URL.Path == "/user" && r.Method == http.MethodPost)) {
 		user := &users.User{}
 		_, err := sessions.GetState(r, ea.signingKey, ea.sessionStore, user)
 		if err != nil {

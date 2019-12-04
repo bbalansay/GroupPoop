@@ -71,14 +71,6 @@ func (ctx *HandlerContext) SessionsHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	// log session sign-in
-	err = ctx.UserStore.Log(time.Now(), r.RemoteAddr)
-	if err != nil {
-		// error logging sign in
-		http.Error(w, "Error logging sign in", http.StatusUnauthorized)
-		return
-	}
-
 	// success, respond to client
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
