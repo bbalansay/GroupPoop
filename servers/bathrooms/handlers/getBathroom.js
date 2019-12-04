@@ -1,11 +1,11 @@
 require("../middleware/getDB")
 
-export async function getBathroom(req, res) {
-    let db;
+export async function getBathroom(req, res, db) {
+    // let db;
     let bathroomID = req.params.bathroomID;
 
     try {
-        db = await getDB()
+        // db = await getDB()
         let user = JSON.parse(req.get("X-User"))
 
         let bathroom = await db.query(`
