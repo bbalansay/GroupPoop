@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS tblBathroom {
   Name VARCHAR(256) NOT NULL,
   Description VARCHAR(512) NOT NULL,
   Location VARCHAR(128) NOT NULL,
+  Gender VARCHAR(128) NOT NULL,
   NumSinks INT NOT NULL,
   NumToilets INT NOT NULL,
   NumUrinals INT NOT NULL,
@@ -39,3 +40,5 @@ INSERT INTO message (channelID, body, createdAt, creator, editedAt) VALUES (@CHI
 ContentContent
 ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password123'
 */
+
+INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)

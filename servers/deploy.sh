@@ -4,6 +4,11 @@ cd ./database
 ./deploy.sh
 cd ..
 
+# Deploy the bathrooms server
+cd ./bathrooms
+./deploy.sh
+cd ..
+
 # Deploy the API gateway
 cd ./gateway
 ./deploy.sh

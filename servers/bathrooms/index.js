@@ -1,13 +1,13 @@
 "use strict"
 
-// const express = require("express");
-// const mysql = require("promise-mysql");
+const express = require("express");
+const mysql = require("promise-mysql");
 
-// const app = express();
-// app.use(express.json())
+const app = express();
+app.use(express.json())
 
-// const addr = process.env.MESSAGESPORT || ":80";
-// const [host, port] = addr.split(":")
+const addr = process.env.MESSAGESPORT || ":80";
+const [host, port] = addr.split(":")
 
 const dbHost = process.env.DBHOST
 const dbPort = process.env.DBPORT
