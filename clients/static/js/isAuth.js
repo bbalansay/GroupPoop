@@ -1,0 +1,1 @@
+if (!sessionStorage.auth) window.location.replace("auth/signin.html")
