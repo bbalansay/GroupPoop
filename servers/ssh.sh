@@ -8,7 +8,7 @@ docker volume rm $(docker volume ls -qf dangling=true)
 
 docker pull bowerw2/grouppoop_api_gateway
 docker pull bowerw2/grouppoop_database
-docker pull bower2/grouppoop_bathroom_server
+docker pull bowerw2/grouppoop_bathroom_server
 
 
 export TLSCERT=/etc/letsencrypt/live/api.grouppoop.icu/fullchain.pem
