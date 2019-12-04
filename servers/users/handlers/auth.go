@@ -5,9 +5,9 @@ import (
 	"GroupPoop/servers/users/sessions"
 	"encoding/json"
 	"net/http"
-	"strings"
-	"strconv"
 	"path"
+	"strconv"
+	"strings"
 )
 
 // UsersHandler handles requests for the "users" resource
@@ -71,7 +71,7 @@ func (ctx *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Re
 	case http.MethodGet: // If request method is GET
 		// Parse ID from resource path
 		idString := path.Base(r.URL.Path)
-		
+
 		user := &users.User{}
 		_, err := sessions.GetState(r, ctx.SigningKey, ctx.SessionStore, user)
 		if err != nil {
@@ -152,6 +152,40 @@ func (ctx *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Re
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(user)
+	case htt.MethodDelete:
+		// Retrieve user from store
+		user : &users.User{}
+		, err := sessions.GetState(r, ctx.SigningKey, ctx.SessionStore, user)
+		if err != nil {
+
+			http.Error(w, "Could not retrieve profile for authenticated user", http.StatusUnauthorized)
+			return
+		}
+
+		// Parse ID from resource path
+		path := r.URL.Path
+		segments := strings.Split(path, "/")
+		id := segments[len(segments)-1]
+		if id != "me" {
+			id, err := strconv.ParseInt(id, 10, 64)
+			if err != nil {
+				http.Error(w, "Did not provide {UserId} as a number in /v1/users/{UserId}, please provide the correct ID", http.StatusBadRequest)
+				return
+			}
+			if id != user.ID {
+				http.Error(w, "{UserID} does not match profile in /v1/users/{UserId}, use resource path /v1/users/me", http.StatusForbidden)
+				return
+			}
+		}
+		
+		// delete user in user store
+		user, err = ctx.UserStore.Delete(id)
+
+		if err != nil {
+			http.Error(w, "Could not delete user from database", http.StatusBadRequest)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
 	default:
 		http.Error(w, "Method not supported", http.StatusMethodNotAllowed)
 		return
