@@ -3,13 +3,13 @@
 const express = require("express");
 const mysql = require("promise-mysql");
 
-import {checkAuth} from './middleware/checkAuth';
-import {getDB} from './middleware/getDB';
-import {getAllBathrooms} from './handlers/getAllBathrooms';
-import {getBathroom} from './handlers/getBathroom';
-import {makeReview} from './handlers/makeReview';
-import {editReview} from './handlers/editReview';
-import {editReview} from './handlers/deleteReview';
+const auth = require("./middleware/checkAuth")
+const db = require("./middleware/getDB")
+const allBath = require("./handlers/getAllBathrooms")
+const getBath = require("./handlers/getBathroom")
+const makeRev = require("./handlers/makeReview")
+const editRev = require("./handlers/editReview")
+const delRev = require("./handlers/deleteReview")
 
 const app = express();
 app.use(express.json())
