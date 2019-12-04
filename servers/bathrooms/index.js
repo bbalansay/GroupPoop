@@ -10,6 +10,8 @@ const getBath = require("./handlers/getBathroom")
 const makeRev = require("./handlers/makeReview")
 const editRev = require("./handlers/editReview")
 const delRev = require("./handlers/deleteReview")
+const addFav = require("./handlers/addFavorite")
+const getFav = require("./handlers/getFavorites")
 
 const app = express();
 app.use(express.json())
@@ -28,6 +30,9 @@ app.post("/bathroom/:bathroomID/review", auth.checkAuth, db.getDB, makeRev.makeR
 
 app.patch("/user/:userID/review/:reviewID", auth.checkAuth, db.getDB, editRev.editReview);
 app.delete("/user/:userID/review/:reviewID", auth.checkAuth, db.getDB, delRev.deleteReview);
+
+app.get("/user/:userID/favorites", auth.checkAuth, db.getDB, getFav.getFavorites);
+app.post("/user/:userID/favorites", auth.checkAuth, db.getDB, addFav.addFavorite)
 
 app.listen(port, host, () => {
     console.log(`server is listening at http://${addr}...`)

@@ -1,10 +1,10 @@
-async function deleteReview(req, res, db) {
+async function deleteReview(req, res) {
     // let db;
     let reviewID = req.params.reviewID;
     let userID = req.params.userID;
 
     try {
-        // db = await getDB();
+        const db = req.db;
         let user = JSON.parse(req.get("X-User"))
 
          // check review exists

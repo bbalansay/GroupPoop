@@ -1,10 +1,9 @@
-async function getBathroom(req, res, db) {
+async function getBathroom(req, res) {
     // let db;
     let bathroomID = req.params.bathroomID;
 
     try {
-        // db = await getDB()
-        let user = JSON.parse(req.get("X-User"))
+        const db = req.db;
 
         let bathroom = await db.query(`
             SELECT * FROM tblBathroom
