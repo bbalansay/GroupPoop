@@ -21,8 +21,7 @@ async function getDB(req, res, next) {
             next()
         }
     } catch (err) {
-        if (db) db.end();
-        return res.status(500).send("unexpected error: " + err.message)
+        return res.status(500).send("can't connect to database", err)
     }
 }
 
