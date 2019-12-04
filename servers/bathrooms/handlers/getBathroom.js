@@ -19,7 +19,8 @@ async function getBathroom(req, res, {getDBConn}) {
         `)
        
         res.set("Content-Type", "application/json")
-        return res.status(200).json(bathroom["reviews"] = reviews)
+        returnValue = {"bathroom": bathroom, "reviews": reviews}
+        return res.status(200).json(returnValue)
     } catch (err) {
         return res.status(500).json( {"error" : err.message })
     }
