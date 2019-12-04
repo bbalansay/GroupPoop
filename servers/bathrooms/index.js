@@ -34,17 +34,6 @@ app.post("/bathroom/:bathroomID/review", checkAuth(req, res), makeReview(req, re
 app.patch("/user/:userID/review/:reviewID", checkAuth(req, res), editReview(req, res));
 app.delete("/user/:userID/review/:reviewID", checkAuth(req, res), deleteReview(req, res));
 
-async function getDB() {
-    let db = await mysql.createConnection({
-        host: dbHost,
-        port: dbPort,
-        user: dbUser,
-        password: dbPass,
-        database: dbName
-    });
-    return db;
-}
-
 app.listen(port, host, () => {
     console.log(`server is listening at http://${addr}...`)
 })

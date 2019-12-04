@@ -1,3 +1,5 @@
+require("../middleware/getDB")
+
 async function editReview(req, res) {
     let db;
     let reviewID = req.params.reviewID;

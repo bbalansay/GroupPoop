@@ -1,3 +1,5 @@
+require("../middleware/getDB")
+
 async function getAllBathrooms(req, res) {
     let db; 
     
