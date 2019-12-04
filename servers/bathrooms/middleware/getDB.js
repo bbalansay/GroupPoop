@@ -13,4 +13,5 @@ async function getDB(req, res, next) {
         database: dbName
     });
     req.db = db;
+    next()
 }
