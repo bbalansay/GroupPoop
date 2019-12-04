@@ -13,12 +13,12 @@ async function editReview(req, res, {getDBConn}) {
             WHERE ID = ${reviewID}
         `)
         if (result.length != 1) {
-            return res.status(403).send("Review does not exist")
+            return res.status(403).json({"message": "Review does not exist"})
         }
 
         // check to see if user is author of review
         if (userID != result[0].UserID) {
-            return res.status(403).send("You are not the creator of this review!")
+            return res.status(403).json({"message": "You are not the creator of this review!"})
         }
 
         if (req.body.content) {

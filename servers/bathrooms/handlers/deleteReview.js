@@ -13,12 +13,12 @@ async function deleteReview(req, res, {getDBConn}) {
             WHERE ID = ${reviewID}
         `)
         if (result.length != 1) {
-            return res.status(403).send("Review does not exist")
+            return res.status(403).json({"message": "Review does not exist"})
         }
 
          // check to see if user is author of review
          if (userID != result[0].UserID) {
-            return res.status(403).send("Your are not the creator of this review!")
+            return res.status(403).json({"message": "Your are not the creator of this review!"})
         }
 
         await db.query(`
@@ -26,9 +26,9 @@ async function deleteReview(req, res, {getDBConn}) {
             WHERE ID = ${reviewID}
         `)
 
-        return res.status(200).send("Successfully deleted!")
+        return res.status(200).json({"message": "Successfully deleted!"})
     } catch(err) {
-        return res.status(500).send("unexpected error: " + err.message)
+        return res.status(500).json({"error: ": err.message})
     }
 }
 
