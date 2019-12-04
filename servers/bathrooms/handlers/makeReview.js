@@ -7,7 +7,7 @@ async function makeReview(req, res, {getDBConn}) {
         let user = JSON.parse(req.get("X-User"))
 
         let reviewJSON = req.body;
-        if (length(reviewJSON.Content) > 512) {
+        if (reviewJSON.Content.length > 512) {
             return res.status(415).send("Review is too long")
         }
         let rows = await db.query(`
