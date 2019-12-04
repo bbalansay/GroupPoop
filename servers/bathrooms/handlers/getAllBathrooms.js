@@ -1,9 +1,8 @@
-async function getAllBathrooms(req, res, db) {
+async function getAllBathrooms(req, res) {
     // let db; 
     
     try {
-        // db = await getDB()
-        let user = JSON.parse(req.get("X-User"))
+        const db = req.db;
 
         let bathrooms = await db.query(`
             SELECT * FROM tblBathroom

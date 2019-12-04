@@ -1,10 +1,10 @@
-async function editReview(req, res, db) {
+async function editReview(req, res) {
     // let db;
     let reviewID = req.params.reviewID;
     let userID = req.params.userID;
 
     try {
-        // db = await getDB();
+        const db = reg.db;
         let user = JSON.parse(req.get("X-User"))
 
         // check review exists
@@ -18,7 +18,7 @@ async function editReview(req, res, db) {
 
         // check to see if user is author of review
         if (userID != result[0].UserID) {
-            return res.status(403).send("Your are not the creator of this review!")
+            return res.status(403).send("You are not the creator of this review!")
         }
 
         if (req.body.content) {

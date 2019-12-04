@@ -35,6 +35,14 @@ CREATE TABLE IF NOT EXISTS tblReview (
   EditedAt DATETIME NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS tblFavorites (
+  ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  UserID INT NOT NULL,
+  FOREIGN KEY (UserID) REFERENCES tblUser(ID) ON DELETE CASCADE,
+  BathroomID INT NOT NULL,
+  FOREIGN KEY (BathroomID) REFERENCES tblBathroom(ID) ON DELETE CASCADE
+);
+
 INSERT INTO tblBathroom (Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
 VALUES ("Men's Mary Gates 4th Floor", "The Mecca of bathrooms, big and not frequented", "Mary Gates Hall", "Masculine", 4, 2, 5, 2, 2, 2);
 INSERT INTO tblBathroom (Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)

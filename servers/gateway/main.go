@@ -14,6 +14,7 @@ import (
 	"time"
 	"strings"
 	"github.com/go-redis/redis"
+	"github.com/gorilla/websocket"
 )
 
 func main() {
@@ -36,7 +37,7 @@ func main() {
 		addr = ":443"
 	}
 
-	ctx := handlers.NewHandlerContext(signingKey, redisStore, handlers.SocketStore{
+	ctx := handlers.NewHandlerContext(signingKey, redisStore, &handlers.SocketStore{
 		Connections: make(map[int64]*websocket.Conn),
 	})
 
@@ -106,7 +107,8 @@ func main() {
 	mux.Handle("/user/", usersProxy)
 	mux.Handle("/bathroom", bathroomsProxy)
 	mux.Handle("/bathroom/", bathroomsProxy)
-	mux.Handle("user/:userID/review/", bathroomsProxy)
+	mux.Handle("/user/:userID/review/", bathroomsProxy)
+	mux.Handle("/user/:userID/favorites", bathroomsProxy)
 	mux.HandleFunc("/chat", ctx.WebsocketConnectionHandler)
 
 	wrappedMux := middleware.NewEnsureCORS(middleware.NewEnsureAuth(mux, signingKey, redisStore))
