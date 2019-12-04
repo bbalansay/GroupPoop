@@ -1,5 +1,5 @@
 #!/bin/bash
-echo Deploying messages server now.
+echo Deploying bathroom server now.
 ./build.sh
 
-sudo docker push bowerw2/grouppoop_bathrooms_server
+sudo docker push bowerw2/grouppoop_bathroom_server
