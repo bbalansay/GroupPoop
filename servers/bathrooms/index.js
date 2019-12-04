@@ -1,7 +1,6 @@
 "use strict"
 
 const express = require("express");
-const mysql = require("promise-mysql");
 
 const auth = require("./middleware/checkAuth")
 const db = require("./middleware/getDB")
