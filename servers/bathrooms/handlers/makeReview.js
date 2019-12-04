@@ -1,5 +1,3 @@
-require("../middleware/getDB")
-
 export async function makeReview(req, res, db) {
     // let db;
     let bathroomID = req.params.bathroomID;

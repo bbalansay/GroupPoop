@@ -1,5 +1,3 @@
-require("../middleware/getDB")
-
 export async function getAllBathrooms(req, res, db) {
     // let db; 
     

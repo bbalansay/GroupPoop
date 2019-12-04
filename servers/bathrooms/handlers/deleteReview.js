@@ -1,5 +1,3 @@
-require("../middleware/getDB")
-
 export async function deleteReview(req, res, db) {
     // let db;
     let reviewID = req.params.reviewID;
