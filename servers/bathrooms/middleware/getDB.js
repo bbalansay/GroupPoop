@@ -15,3 +15,7 @@ async function getDB(req, res, next) {
     req.db = db;
     next()
 }
+
+module.exports = {
+    getDB
+}
