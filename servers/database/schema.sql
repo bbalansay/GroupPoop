@@ -35,16 +35,15 @@ CREATE TABLE IF NOT EXISTS tblReview (
   EditedAt DATETIME NOT NULL
 );
 
-INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
-VALUES ("Men's Mary Gates 4th Floor", "The Mecca of bathrooms, big and not frequented", "Mary Gates Hall", "Masculine", 4, 2, 5, 2, 2, 2)
-INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
-VALUES ("Women's Mary Gates 4th Floor", "The Mecca of bathrooms, big and not frequented", "Mary Gates Hall", "Feminine", 4, 4, 0, 2, 2, 2)
-INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
-VALUES ("Men's Ode 1st Floor", "MY NOSTRILS!!!", "Odegaard Library", "Masculine", 5, 4, 5, 3, 2, 2)
-INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
-VALUES ("Women's Mary Gates 4th Floor", "MY NOSTRILS!!!", "Odegaard Library", "Feminine", 5, 6, 0, 3, 2, 2)
-INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
-VALUES ("Gender Neutral Smith 2nd Floor", "The door locks but there's two stalls...", "Smith Hall", "Gender Neutral", 1, 2, 0, 1, 1, 1)
-INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
-VALUES ("Gender Neutral Gowen 2nd Floor", "Never actually been in there, always been occupied.", "Gowen Hall", "Gender Neutral", 1, 1, 1, 1, 1, 1)
-
+INSERT INTO tblBathroom (Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
+VALUES ("Men's Mary Gates 4th Floor", "The Mecca of bathrooms, big and not frequented", "Mary Gates Hall", "Masculine", 4, 2, 5, 2, 2, 2);
+INSERT INTO tblBathroom (Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
+VALUES ("Women's Mary Gates 4th Floor", "The Mecca of bathrooms, big and not frequented", "Mary Gates Hall", "Feminine", 4, 4, 0, 2, 2, 2);
+INSERT INTO tblBathroom (Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
+VALUES ("Men's Ode 1st Floor", "MY NOSTRILS!!!", "Odegaard Library", "Masculine", 5, 4, 5, 3, 2, 2);
+INSERT INTO tblBathroom (Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
+VALUES ("Women's Mary Gates 4th Floor", "MY NOSTRILS!!!", "Odegaard Library", "Feminine", 5, 6, 0, 3, 2, 2);
+INSERT INTO tblBathroom (Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
+VALUES ("Gender Neutral Smith 2nd Floor", "The door locks but there's two stalls...", "Smith Hall", "Gender Neutral", 1, 2, 0, 1, 1, 1);
+INSERT INTO tblBathroom (Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
+VALUES ("Gender Neutral Gowen 2nd Floor", "Never actually been in there, always been occupied.", "Gowen Hall", "Gender Neutral", 1, 1, 1, 1, 1, 1);

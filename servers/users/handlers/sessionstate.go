@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"assignments-zhouyifan0904/servers/gateway/models/users"
+	"GroupPoop/servers/users/models/users"
 	"time"
 )
 
