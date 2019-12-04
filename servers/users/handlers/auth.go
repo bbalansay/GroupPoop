@@ -12,7 +12,7 @@ import (
 
 // UsersHandler handles requests for the "users" resource
 // Accepts POST requests to create new user accounts
-func (ctx *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Request) {
+func (ctx *HandlerContext) UserHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodPost: // If request method is POST
 		// Content-Type must be JSON

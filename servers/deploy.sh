@@ -9,6 +9,11 @@ cd ./auth
 ./deploy.sh
 cd ..
 
+# Deploy the users server
+cd ./users
+./deploy.sh
+cd ..
+
 # Deploy the bathrooms server
 cd ./bathrooms
 ./deploy.sh
