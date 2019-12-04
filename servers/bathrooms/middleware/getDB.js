@@ -1,5 +1,4 @@
 const mysql = require("promise-mysql");
-
 const dbHost = process.env.DBHOST
 const dbPort = process.env.DBPORT
 const dbUser = process.env.DBUSER
@@ -21,8 +20,7 @@ async function getDB(req, res, next) {
             next()
         }
     } catch (err) {
-        if (db) db.end();
-        return res.status(500).send("unexpected error: " + err.message)
+        return res.status(500).send("can't connect to database", err)
     }
 }
 
