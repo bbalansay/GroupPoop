@@ -20,6 +20,7 @@ async function getBathroom(req, res) {
        
 
         if (db) db.end();
+        res.set("Content-Type", "application/json")
         return res.status(200).json(bathroom.concat(reviews))
     } catch (err) {
         if (db) db.end();

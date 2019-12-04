@@ -36,6 +36,7 @@ async function editReview(req, res) {
             `)
         }
         if (db) db.end();
+        res.set("Content-Type", "application/json")
         return res.status(201).json(result[0])
     } catch {
         if (db) db.end();
