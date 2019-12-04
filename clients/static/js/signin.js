@@ -55,5 +55,5 @@ const saveProfile = (json) => {
 }
 
 const redirect = () => {
-  setTimeout(() => window.location.replace("../index.html"), 1000);
+  setTimeout(() => window.location.replace("/index.html"), 1000);
 }
