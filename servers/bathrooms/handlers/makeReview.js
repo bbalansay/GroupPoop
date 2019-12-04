@@ -12,7 +12,7 @@ async function makeReview(req, res, {getDBConn}) {
         }
         let rows = await db.query(`
             INSERT INTO tblReview (UserID, BathroomID, Score, Content, CreatedAt, EditedAt)
-            VALUES (${user.id}, ${bathroomID}, ${reviewJSON.Score}, ${reviewJSON.Content}, NOW(), NOW());
+            VALUES (${user.id}, ${bathroomID}, ${reviewJSON.Score}, '${reviewJSON.Content}', NOW(), NOW());
         `)
 
         res.set("Content-Type", "application/json")
