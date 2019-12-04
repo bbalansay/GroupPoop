@@ -14,11 +14,55 @@
       crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="static/css/styles.css">
-  </head>
-  <body>
-    <!-- Authorization -->
-    <script type="text/javascript" src="static/js/isAuth.js"></script> 
 
+    <!-- Authorization -->
+    <script type="text/javascript" src="static/js/isAuth.js"></script>
+
+    <!-- WebSocket connection -->
+    <script>
+        "use strict"
+        
+        let sock;
+        let token = "";
+
+        let authToken = sessionStorage.auth.split(" ");
+        
+        function connectWS() {
+          let apiWsUrl = "wss://api.grouppoop.icu/chat?auth=" + authToken[1];
+          
+          console.log("connecting to web socket " + apiWsUrl);
+          sock = new WebSocket(apiWsUrl);
+  
+          sock.onopen = () => {
+            console.log("Connection Opened");
+          };
+  
+          sock.onclose = () => {
+            console.log("Connection Closed");
+          };
+  
+          sock.onmessage = (msg) => {
+            console.log("Message received " + msg.data);
+            
+            var node = document.createElement("LI");
+            var textNode = document.createTextNode(msg.data);
+            node.appendChild(textNode);
+            document.getElementById("server-text").appendChild(node);
+          };
+        }
+  
+        function submit() {
+          let clientMsg = document.getElementById("text-input").value;
+  
+          console.log(clientMsg);
+          
+          var userJSON = JSON.parse(sessionStorage.profile)
+          var messageText = userJSON.userName + ": " + clientMsg
+          sock.send(messageText);
+        };
+      </script>
+  </head>
+  <body onload="connectWS()">
     <!-- Navigation -->•••••
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -28,13 +72,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/bathrooms">Bathrooms</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link" href="/shitshow.html">Shit Show</a>
             </li>
             <li class="nav-item">
@@ -50,11 +94,14 @@
 
     <!-- Main Content -->
     <section style="margin: auto; text-align: center; width: 70%">
-      <h1>Welcome to GroupPoop!</h1>
-      <p>Everyone deserves to have a quality BM — here at GroupPoop, we aim to give you a #1 experience for your #2's. Built primarily for use by students and faculty at the University of Washington, we plan to scale this to a nationwide audience.</p>
-      <p>Not sure which bathroom to use? Head over to our Bathrooms tab and maybe even leave a review!</p>
-      <p>Feel free to talk shit as you please by directing yourself to our Shit Show tab.</p>
-      <p>Check out the Profile tab to see your favorite bathrooms and any reviews you have made.</p>
+      <h1>Welcome to the Shit Show!</h1>
+
+      <div id="server-text"></div>
+      <div>
+        <input type="text" id="text-input" placeholder="Enter value to send through WS" >
+        <input type="submit" onclick="submit();">
+      </div>
+
     </section>
 
     <!-- Footer -->
