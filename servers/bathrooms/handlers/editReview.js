@@ -31,7 +31,7 @@ async function editReview(req, res, {getDBConn}) {
                 WHERE ID = ${reviewID}
             `)
             await db.query(`
-                UPDATE Review SET EditedAt = NOW()
+                UPDATE Review SET EditedAt = SELECT NOW()
                 WHERE ID = ${reviewID}
             `)
         }
