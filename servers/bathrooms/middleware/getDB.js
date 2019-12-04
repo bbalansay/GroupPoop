@@ -1,3 +1,5 @@
+const mysql = require("promise-mysql");
+
 const dbHost = process.env.DBHOST
 const dbPort = process.env.DBPORT
 const dbUser = process.env.DBUSER
