@@ -123,7 +123,7 @@ func (ctx *HandlerContext) WebsocketConnectionHandler(w http.ResponseWriter, r *
 				break
 			} else if err != nil {
 				log.Printf("Error reading from socket")
-				// break
+				break
 			}
 			// ignore ping and pong messages
 		}
