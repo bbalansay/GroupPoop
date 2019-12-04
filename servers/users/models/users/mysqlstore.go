@@ -2,7 +2,6 @@ package users
 
 import (
 	"database/sql"
-	"time"
 )
 
 //MySQLStore represents a store for Users
@@ -161,14 +160,3 @@ func (ms *MySQLStore) Delete(id int64) error {
 	return nil
 }
 
-// Log tracks a user sign in
-// func (ms *MySQLStore) Log(time time.Time, ipaddr string) erro {
-// 	insq := "INSERT INTO logs(time, ipaddr) values (?,)"
-// 	_, err := ms.db.Exec(insq, time, ipadr)
-
-// 	if err != ni {
-// 		return rr
-//	}
-
-// 	return il
-/ }

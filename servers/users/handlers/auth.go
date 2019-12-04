@@ -152,12 +152,11 @@ func (ctx *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Re
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(user)
-	case htt.MethodDelete:
+	case http.MethodDelete:
 		// Retrieve user from store
-		user : &users.User{}
-		, err := sessions.GetState(r, ctx.SigningKey, ctx.SessionStore, user)
+		user := &users.User{}
+		_, err := sessions.GetState(r, ctx.SigningKey, ctx.SessionStore, user)
 		if err != nil {
-
 			http.Error(w, "Could not retrieve profile for authenticated user", http.StatusUnauthorized)
 			return
 		}
@@ -179,8 +178,7 @@ func (ctx *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Re
 		}
 		
 		// delete user in user store
-		user, err = ctx.UserStore.Delete(id)
-
+		err = ctx.UserStore.Delete(user.ID)
 		if err != nil {
 			http.Error(w, "Could not delete user from database", http.StatusBadRequest)
 			return
