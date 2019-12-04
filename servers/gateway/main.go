@@ -107,7 +107,7 @@ func main() {
 	mux.Handle("/user/", usersProxy)
 	mux.Handle("/bathroom", bathroomsProxy)
 	mux.Handle("/bathroom/", bathroomsProxy)
-	mux.Handle("/review", bathroomsProxy)
+	mux.Handle("/review/", bathroomsProxy)
 	mux.Handle("/favorites", bathroomsProxy)
 	mux.HandleFunc("/chat", ctx.WebsocketConnectionHandler)
 

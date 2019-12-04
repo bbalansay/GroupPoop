@@ -16,7 +16,7 @@ $(document).ready(() => {
 const populateBathrooms = (bathrooms) => {
   for (let bathroom of bathrooms) {
     let card = document.createElement("div")
-    card.id = bathroom.id
+    card.id = bathroom.ID
     
     let body = document.createElement("div");
     body.className = "card-body";
@@ -37,6 +37,6 @@ const populateBathrooms = (bathrooms) => {
     desc.textContent = bathroom.Description.length > 50 ? bathroom.Description.substring(0, 46) + "..." : bathroom.Description;
     body.appendChild(desc);
 
-    $("#bathrooms").appendChild(card);
+    $("#bathrooms").append(card);
   }
 }
