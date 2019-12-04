@@ -1,15 +1,15 @@
-CREATE TABLE IF NOT EXISTS tblUser {
+CREATE TABLE IF NOT EXISTS tblUser (
   ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  Email VARCHAR(128) NOT NULL,
-  UserName VARCHAR(256) NOT NULL,
+  Email VARCHAR(512) NOT NULL UNIQUE,
+  UserName VARCHAR(256) NOT NULL UNIQUE,
   PassHash VARCHAR(128) NOT NULL,
   FirstName VARCHAR(128) NOT NULL,
   LastName VARCHAR(128) NOT NULL,
   PhotoURL VARCHAR(512) NOT NULL,
   INDEX (Email, UserName)
-}
+);
 
-CREATE TABLE IF NOT EXISTS tblBathroom {
+CREATE TABLE IF NOT EXISTS tblBathroom (
   ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   Name VARCHAR(256) NOT NULL,
   Description VARCHAR(512) NOT NULL,
@@ -21,26 +21,30 @@ CREATE TABLE IF NOT EXISTS tblBathroom {
   NumTrashCans INT NOT NULL,
   NumAirDryers INT NOT NULL,
   NumTowelDispensers INT NOT NULL
-}
+);
 
-CREATE TABLE IF NOT EXISTS tblReview {
+CREATE TABLE IF NOT EXISTS tblReview (
   ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  FOREIGN KEY (UserID) REFERENCES tblUser(ID) ON DELETE CASCADE NOT NULL,
-  FOREIGN KEY (BathroomID) REFERENCES tblBathroom(ID) ON DELETE CASCADE NOT NULL,
+  UserID INT NOT NULL,
+  FOREIGN KEY (UserID) REFERENCES tblUser(ID) ON DELETE CASCADE,
+  BathroomID INT NOT NULL,
+  FOREIGN KEY (BathroomID) REFERENCES tblBathroom(ID) ON DELETE CASCADE,
   Score INT NOT NULL,
   Content VARCHAR(512) NOT NULL,
   CreatedAt DATETIME NOT NULL,
   EditedAt DATETIME NOT NULL
-}
-
-/*
-INSERT INTO users (email, pass_hash, user_name, first_name, last_name, photo_url) VALUES ("admin@yfzhou.me", "password123", "admin", "first", "last", "photo_url");
-SET @UID = LAST_INSERT_ID();
-INSERT INTO channel (name, description, private, createdAt, creator, editedAt) VALUES ("general", "General channel for general discussion", FALSE, NOW(), @UID, NULL);
-SET @CHID = LAST_INSERT_ID();
-INSERT INTO message (channelID, body, createdAt, creator, editedAt) VALUES (@CHID, "Hello world! This is the general channel.", NOW(), @UID, NULL);
-ContentContent
-ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password123'
-*/
+);
 
 INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
+VALUES ("Men's Mary Gates 4th Floor", "The Mecca of bathrooms, big and not frequented", "Mary Gates Hall", "Masculine", 4, 2, 5, 2, 2, 2)
+INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
+VALUES ("Women's Mary Gates 4th Floor", "The Mecca of bathrooms, big and not frequented", "Mary Gates Hall", "Feminine", 4, 4, 0, 2, 2, 2)
+INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
+VALUES ("Men's Ode 1st Floor", "MY NOSTRILS!!!", "Odegaard Library", "Masculine", 5, 4, 5, 3, 2, 2)
+INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
+VALUES ("Women's Mary Gates 4th Floor", "MY NOSTRILS!!!", "Odegaard Library", "Feminine", 5, 6, 0, 3, 2, 2)
+INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
+VALUES ("Gender Neutral Smith 2nd Floor", "The door locks but there's two stalls...", "Smith Hall", "Gender Neutral", 1, 2, 0, 1, 1, 1)
+INSERT INTO tblBathroom(Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
+VALUES ("Gender Neutral Gowen 2nd Floor", "Never actually been in there, always been occupied.", "Gowen Hall", "Gender Neutral", 1, 1, 1, 1, 1, 1)
+

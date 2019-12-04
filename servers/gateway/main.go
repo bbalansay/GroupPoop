@@ -1,7 +1,6 @@
 package main
 
 import (
-<<<<<<< HEAD
 	"GroupPoop/servers/gateway/sessions"
 	"GroupPoop/servers/gateway/handlers"
 	"GroupPoop/servers/gateway/proxy"
@@ -14,15 +13,6 @@ import (
 	"time"
 	"strings"
 	"github.com/go-redis/redis"
-=======
-	"fmt"
-	"log"
-	"net/http"
-	"net/http/httputil"
-	"net/url"
-	"os"
-	"strings"
->>>>>>> 64cfa2de3011412f322f1b77f07d44d18007c5d0
 )
 
 func main() {
@@ -60,7 +50,6 @@ func main() {
 		os.Exit(1)
 	}
 
-<<<<<<< HEAD
 	// Receive address(es) for messages microservice(s) and insert into CustomDirector
 	bathroomsAddr := os.Getenv("BATHROOMADDR")
 	bathroomsAddrs := strings.Split(bathroomsAddr, ",")
@@ -74,32 +63,17 @@ func main() {
 		bathroomsAddrURLs = append(bathroomsAddrURLs, bathroomsAddrURL)
 	}
 	bathroomsProxy := &httputil.ReverseProxy{Director: proxy.CustomDirector(bathroomsAddrURLs)}
-=======
-	// Receive address(es) for bathroom microservice(s) and insert into CustomDirector
-	bathroomAddr := os.Getenv("BATHROOMADDR")
-	bathroomAddrs := strings.Split(bathroomAddr, ",")
-	bathroomAddrURLs := []*url.URL{}
-	for i, _ := range bathroomAddrs {
-		bathroomAddrURL, err := url.Parse(bathroomAddrs[i])
-		if err != nil {
-			fmt.Printf("error parsing bathroom URLs: %v\n", err)
-			os.Exit(1)
-		}
-		bathroomAddrURLs = append(bathroomAddrURLs, bathroomAddrURL)
-	}
-	BathroomProx := &httputil.ReverseProxy{Director: CustomDirector(bathroomAddrURLs)}
->>>>>>> 64cfa2de3011412f322f1b77f07d44d18007c5d0
 
 	mux := http.NewServeMux()
 
-	mux.Handle("/")
 	mux.HandleFunc("/", HelloServer)
-	mux.Handle("/bathroom", bathroomProxy)
-	mux.Handle("/bathroom/", bathroomProxy)
-	mux.Handle("user/:userID/review/", bathroomProxy)
+	mux.Handle("/bathroom", bathroomsProxy)
+	mux.Handle("/bathroom/", bathroomsProxy)
+	mux.Handle("user/:userID/review/", bathroomsProxy)
 
+	wrappedMux := handlers.NewEnsureCORS(handlers.NewEnsureAuth(mux, signingKey, redisStore))
 	log.Printf("server is listening at https://%s", addr)
-	log.Fatal(http.ListenAndServeTLS(addr, tlsCertPath, tlsKeyPath, mux))
+	log.Fatal(http.ListenAndServeTLS(addr, tlsCertPath, tlsKeyPath, wrappedMux))
 
 }
 
