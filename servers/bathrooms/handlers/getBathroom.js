@@ -1,6 +1,6 @@
 require("../middleware/getDB")
 
-async function getBathroom(req, res) {
+export async function getBathroom(req, res) {
     let db;
     let bathroomID = req.params.bathroomID;
 

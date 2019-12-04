@@ -1,4 +1,4 @@
-async function getDB() {
+export async function getDB() {
     let db = await mysql.createConnection({
         host: dbHost,
         port: dbPort,

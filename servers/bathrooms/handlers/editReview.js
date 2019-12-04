@@ -1,6 +1,6 @@
 require("../middleware/getDB")
 
-async function editReview(req, res) {
+export async function editReview(req, res) {
     let db;
     let reviewID = req.params.reviewID;
     let userID = req.params.userID;

@@ -1,6 +1,6 @@
 require("../middleware/getDB")
 
-async function deleteReview(req, res) {
+export async function deleteReview(req, res) {
     let db;
     let reviewID = req.params.reviewID;
     let userID = req.params.userID;
