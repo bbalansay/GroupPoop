@@ -15,11 +15,9 @@ async function makeReview(req, res, {getDBConn}) {
             VALUES (${user.id}, ${bathroomID}, ${reviewJSON.Score} ${reviewJSON.Content}, NOW(), NOW())
         `)
 
-        if (db) db.end();
         res.set("Content-Type", "application/json")
         return res.status(201).json(reviewJSON);
     } catch (err) {
-        if (db) db.end();
         return res.status(500).json( {"error" : err.message })
     }
 }

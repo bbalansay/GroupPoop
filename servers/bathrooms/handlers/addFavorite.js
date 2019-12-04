@@ -23,10 +23,8 @@ async function addFavorite(req, res, {getDBConn}) {
             VALUES (${user.id}, ${bathroomID})
         `)
 
-        if (db) db.end();
         return res.status(201).json({"message": "Favorite added."});
     } catch(err) {
-        if (db) db.end();
         return res.status(500).json( {"error" : err.message })
     }
 }

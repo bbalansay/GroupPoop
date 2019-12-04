@@ -26,10 +26,8 @@ async function deleteReview(req, res, {getDBConn}) {
             WHERE ID = ${reviewID}
         `)
 
-        if (db) db.end();
         return res.status(200).send("Successfully deleted!")
     } catch(err) {
-        if (db) db.end();
         return res.status(500).send("unexpected error: " + err.message)
     }
 }

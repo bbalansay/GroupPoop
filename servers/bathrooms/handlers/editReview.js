@@ -35,11 +35,10 @@ async function editReview(req, res, {getDBConn}) {
                 WHERE ID = ${reviewID}
             `)
         }
-        if (db) db.end();
+
         res.set("Content-Type", "application/json")
         return res.status(201).json(result[0])
     } catch(err) {
-        if (db) db.end();
         return res.status(500).json({"error": err.message})
     }
 }
