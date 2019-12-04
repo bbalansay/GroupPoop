@@ -33,26 +33,18 @@ async function getDB() {
     return db;
 }
 
+let db = getDB();
 //get all the bathrooms in the database
-app.get("/bathroom", getAllBathrooms(req, res));
+app.get("/bathroom", checkAuth(req, res, next), getAllBathrooms(req, res, db));
 
 //gets a specific bathroom and all reviews
-app.get("/bathroom/:bathroomID", getBathroom(req, res));
+app.get("/bathroom/:bathroomID", checkAuth(req, res, next), getBathroom(req, res, db));
 
 // create a review for a specific bathroom
-<<<<<<< HEAD
-app.post("/bathroom/:bathroomID/review", checkAuth(req, res), makeReview(req, res));
+app.post("/bathroom/:bathroomID/review", checkAuth(req, res, next), makeReview(req, res, db));
 
-app.patch("/user/:userID/review/:reviewID", checkAuth(req, res), editReview(req, res));
-app.delete("/user/:userID/review/:reviewID", checkAuth(req, res), deleteReview(req, res));
-
-
-=======
-app.post("/bathroom/:bathroomID/review", checkAuth(req, res, next), makeReview(req, res));
-
-app.patch("/user/:userID/review/:reviewID", checkAuth(req, res, next), editReview(req, res));
-app.delete("/user/:userID/review/:reviewID", checkAuth(req, res, next), deleteReview(req, res));
->>>>>>> 1638dafc850a295e7a8f7f2763d1f201a961451c
+app.patch("/user/:userID/review/:reviewID", checkAuth(req, res, next), editReview(req, res, db));
+app.delete("/user/:userID/review/:reviewID", checkAuth(req, res, next), deleteReview(req, res, db));
 
 app.listen(port, host, () => {
     console.log(`server is listening at http://${addr}...`)

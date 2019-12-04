@@ -1,12 +1,10 @@
-require("../middleware/getDB")
-
-export async function deleteReview(req, res) {
-    let db;
+export async function deleteReview(req, res, db) {
+    // let db;
     let reviewID = req.params.reviewID;
     let userID = req.params.userID;
 
     try {
-        db = await getDB();
+        // db = await getDB();
         let user = JSON.parse(req.get("X-User"))
 
          // check review exists

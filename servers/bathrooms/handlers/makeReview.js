@@ -1,11 +1,9 @@
-require("../middleware/getDB")
-
-export async function makeReview(req, res) {
-    let db;
+export async function makeReview(req, res, db) {
+    // let db;
     let bathroomID = req.params.bathroomID;
 
     try {
-        db = await getDB()
+        // db = await getDB()
         let user = JSON.parse(req.get("X-User"))
 
         let reviewJSON = req.body;
