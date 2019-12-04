@@ -55,3 +55,11 @@ INSERT INTO tblBathroom (Name, Description, Location, Gender, NumSinks, NumToile
 VALUES ("Gender Neutral Smith 2nd Floor", "The door locks but there's two stalls...", "Smith Hall", "Gender Neutral", 1, 2, 0, 1, 1, 1);
 INSERT INTO tblBathroom (Name, Description, Location, Gender, NumSinks, NumToilets, NumUrinals, NumTrashCans, NumAirDryers, NumTowelDispensers)
 VALUES ("Gender Neutral Gowen 2nd Floor", "Never actually been in there, always been occupied.", "Gowen Hall", "Gender Neutral", 1, 1, 1, 1, 1, 1);
+
+-- Set password for nodejs app-- not an ideal way.
+alter user root identified with mysql_native_password by 'password123';
+flush privileges;
+
+
+
+

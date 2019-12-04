@@ -1,6 +1,6 @@
-async function getFavorites(req, res) {
+async function getFavorites(req, res, {getDBConn}) {
     try {
-        const db = req.db;
+        const db = getDBConn();
         let user = JSON.parse(req.get("X-User"))
 
         let bathroomsIDs = []

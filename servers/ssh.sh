@@ -42,7 +42,7 @@ docker run -d \
 --name bathroomsServer \
 --network ServerNetwork \
 --restart=unless-stopped \
--e MESSAGESPORT=":80" \
+-e BATHROOMSPORT=":80" \
 -e DBHOST="database" \
 -e DBPORT="3306" \
 -e DBUSER="root" \

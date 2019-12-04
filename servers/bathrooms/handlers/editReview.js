@@ -1,10 +1,10 @@
-async function editReview(req, res) {
+async function editReview(req, res, {getDBConn}) {
     // let db;
     let reviewID = req.params.reviewID;
     let userID = req.params.userID;
 
     try {
-        const db = reg.db;
+        const db = getDBConn();
         let user = JSON.parse(req.get("X-User"))
 
         // check review exists

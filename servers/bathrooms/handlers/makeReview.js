@@ -1,9 +1,9 @@
-async function makeReview(req, res) {
+async function makeReview(req, res, {getDBConn}) {
     // let db;
     let bathroomID = req.params.bathroomID;
 
     try {
-        const db = req.db;
+        const db = getDBConn();
         let user = JSON.parse(req.get("X-User"))
 
         let reviewJSON = req.body;

@@ -1,9 +1,9 @@
-async function getBathroom(req, res) {
+async function getBathroom(req, res, {getDBConn}) {
     // let db;
     let bathroomID = req.params.bathroomID;
 
     try {
-        const db = req.db;
+        const db = getDBConn();
 
         let bathroom = await db.query(`
             SELECT * FROM tblBathroom

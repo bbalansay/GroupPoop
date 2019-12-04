@@ -1,8 +1,8 @@
-async function getAllBathrooms(req, res) {
+async function getAllBathrooms(req, res, {getDBConn}) {
     // let db; 
     
     try {
-        const db = req.db;
+        const db = getDBConn();
 
         let bathrooms = await db.query(`
             SELECT * FROM tblBathroom
