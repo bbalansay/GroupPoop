@@ -34,7 +34,7 @@ Here is our final architecture diagram. As you can see we got rid of RabbitMQ ha
 | 4   | P1       | As a user | I want to review a bathroom on campus |
 | 5   | P1       | As a user | I want to make a list of my favorite bathrooms |
 | 6   | P2       | As a user | I want to edit a review |
-| 6   | P2       | As a user | I want to delete a review |
+| 7   | P2       | As a user | I want to delete a review |
 
 <br>
 
@@ -49,7 +49,7 @@ Here is our final architecture diagram. As you can see we got rid of RabbitMQ ha
 | 7   | To delete a review of a bathroom make a **DELETE request** at `/review/:reviewID`. Upon receiving the request, the server will delete a review from the **MySQL database** that matches the given information. |
 
 ### Endpoints
-`/user/login`:
+`/login`:
 
 - `POST`: `application/json`: Log in user and returns session token.
 	- `200`: `application/json`: Successfully logs in user; returns session token in `Authorization` header.
@@ -57,6 +57,7 @@ Here is our final architecture diagram. As you can see we got rid of RabbitMQ ha
   - `415`: Cannot decode body / received unsupported body.
   - `500`: Internal server error.
 
+`/login/:userID`:
 - `DELETE`: Log out a user.
   - `200`: Successfully logs out user. 
   - `401`: Cannot verify session token or no session token. 
@@ -66,17 +67,22 @@ Here is our final architecture diagram. As you can see we got rid of RabbitMQ ha
 
 `/user`:
 
-- `GET`: Get user information, including reviews.
-	- `200`; `application/json`: Succesfully retrieves user information, returns encoded user model in body.
-	- `401`: Cannot verify session token or no session token.
-	- `500`: Internal server error.
+
 - `POST`: `application/json`: Create a new user.
 	- `201`; `application/json`: Successfully creates a new user, returns encoded user model in body. 
 	- `401`: Cannot verify session token or no session token.  
 	- `415`: Cannot decode body / received unsupported body. 
 	- `500`: Internal server error. 
-- `PATCH`: `application/json`: Update password for user.
-	- `200`; `application/json`: Successfully updates password for user. 
+
+
+  `/user/:userID`:
+
+- `GET`: Get user information, including reviews.
+	- `200`; `application/json`: Succesfully retrieves user information, returns encoded user model in body.
+	- `401`: Cannot verify session token or no session token.
+	- `500`: Internal server error.
+- `PATCH`: `application/json`: Update first and / or last name for user.
+	- `200`; `application/json`: Successfully first and / or last name password for user. 
 	- `401`: Cannot verify session token or no session token. 
 	- `415`: Cannot decode body / received unsupported body. 
 	- `500`: Internal server error. 
@@ -87,35 +93,40 @@ Here is our final architecture diagram. As you can see we got rid of RabbitMQ ha
 
 <br>
 
-`/review`: 
+`/review/:reviewID`: 
 
-- `GET`: Get review information
-	- `200`; `application/json`: Succesfully retrieves review information, returns encoded review model in body. 
-	- `401`: Cannot verify session token or no session token. 
-	- `500`: Internal server error. 
-- `POST`: `application/json`: Create a new review.
-	- `201`; `application/json`: Successfully creates a new review, returns encoded review model in body. 
-	- `401`: Cannot verify session token or no session token. 
-	- `415`: Cannot decode body / received unsupported body. 
-	- `500`: Internal server error. 
 - `PATCH`: `application/json`: Update review.
 	- `200`; `application/json`: Successfully updates review. 
 	- `401`: Cannot verify session token or no session token. 
-	- `415`: Cannot decode body / received unsupported body. 
+	- `403`: Review does not exist. 
 	- `500`: Internal server error. 
 - `DELETE`: Delete a review.
 	- `200`: Successfully deletes review. 
 	- `401`: Cannot verify session token or no session token. 
+  - `403`: Review does not exist. 
 	- `500`: Internal server error. 
 
 <br>
 
 `/bathroom`: 
 
-- `GET`: Get bathroom information
-	- `200`; `application/json`: Succesfully retrieves bathroom information, returns encoded review model in body. 
+- `GET`: Get all bathrooms information
+	- `200`; `application/json`: Succesfully retrieves bathrooms information, returns encoded review model in body. 
 	- `401`: Cannot verify session token or no session token. 
-	- `500`: Internal server error. 
+	- `500`: Internal server error.
+
+`/bathroom/:bathroomID`: 
+
+- `GET`: Get a specific bathroom's information
+	- `200`; `application/json`: Succesfully retrieves a bathroom's information, returns encoded review model in body. 
+	- `401`: Cannot verify session token or no session token. 
+	- `500`: Internal server error.
+
+- `POST`: `application/json`: Create a new review.
+	- `201`; `application/json`: Successfully creates a new review, returns encoded review model in body. 
+	- `401`: Cannot verify session token or no session token. 
+	- `415`: Cannot decode body / received unsupported body. 
+	- `500`: Internal server error.  
 
 <br>
 
