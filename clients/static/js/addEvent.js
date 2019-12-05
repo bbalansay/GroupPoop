@@ -29,8 +29,6 @@ window.onload = () => {
       })
         .then(checkStatus)
         .then(resp => resp.json())
-        .then(console.log)
-        .then(window.location.reload())
         .catch(console.log)
       })
   }, 1000)
