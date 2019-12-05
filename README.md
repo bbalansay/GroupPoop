@@ -14,10 +14,15 @@ Most of us, if not all of us, have had some uncomfortable situations when needin
 
 ## Technical Specifications
 
-### Architectural Diagram
+### Initial Architectural Diagram
 The system we create will implement a microservices architecture. All requests from users get handled by the Gateway layer server, which then creates needs and puts them onto the RabbitMQ request queue. Microservices will be subscribed to the request queue and if they can fulfill a need, they will, and then will return the fulfilled need onto the reply queue, which the gateway layer then receives and processes. The Redis store and MySQL store will be accessible via microservices.
 
 ![Architecture Diagram](img/architecture_diagram.png)
+
+### Final Architectural Diagram
+Here is our final architecture diagram. As you can see we got rid of RabbitMQ handling microservices and our API gateway now functions as a reverse proxy.
+
+![Final Architecture Diagram](img/final_architecture_diagram.png)
 
 ### User Stories
 
@@ -29,7 +34,6 @@ The system we create will implement a microservices architecture. All requests f
 | 4   | P1       | As a user | I want to rate a bathroom on campus |
 | 5   | P1       | As a user | I want to make a list of my favorite bathrooms |
 | 6   | P2       | As a user | I want to delete a review |
-| 7   | P2       | As a user | I want to like a review |
 
 <br>
 
@@ -41,7 +45,6 @@ The system we create will implement a microservices architecture. All requests f
 | 4   | To review a bathroom on campus, make a **POST request** at `/bathrooms/{id}`. Upon receiving the request, the server will create a new **INSERT statement** using the information prvided to add to the **MySQL database**.|
 | 5   | To make a list of favorite bathrooms, make a **PATCH request** at `/user/{id}`. Upon receiving the request, the server will update the user information in the **MySQL database** to include a list of bathrooms. |
 | 6   | To delete a review of a bathroom make a **DELETE request** at `/review/{id}`. Upon receiving the request, the server will delete a review from the **MySQL database** that matches the given information. |
-| 7   | To like a review of a bathroom make a **PATCH request** at `/review/{id}`. Upon receiving the request, the server will update a review from the **MySQL database** to increment the likes value. |
 
 ### Endpoints
 `/user/login`:
