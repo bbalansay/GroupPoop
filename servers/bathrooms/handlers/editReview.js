@@ -21,14 +21,14 @@ async function editReview(req, res, {getDBConn}) {
             return res.status(403).json({"message": "You are not the creator of this review!"})
         }
         console.log("AH" + req.body.Content)
-        if (req.body.content) {
-            console.log("GRAH" + req.body.content)
+        if (req.body.Content) {
+            console.log("GRAH" + req.body.Content)
             await db.query(`
                 UPDATE tblReview SET Score = '${req.body.Score}'
                 WHERE ID = ${reviewID}
             `)
             await db.query(`
-                UPDATE tblReview SET Content = '${req.body.contnet}'
+                UPDATE tblReview SET Content = '${req.body.Content}'
                 WHERE ID = ${reviewID}
             `)
             await db.query(`
