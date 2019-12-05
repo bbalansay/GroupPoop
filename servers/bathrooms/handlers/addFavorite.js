@@ -11,13 +11,13 @@ async function addFavorite(req, res, {getDBConn}) {
             FROM tblFavorites
             WHERE UserID = ${user.id}
         `)
-
+        console.log("AHHHH")
         for (let result of results) {
             if (result.BathroomID == bathroomID) {
                 res.status(304).json({"error": "Favorite already added."})
             }
         }
-
+        console.log("about to add favorite")
         let rows = await db.query(`
             INSERT INTO tblFavorites (UserID, BathroomID)
             VALUES (${user.id}, ${bathroomID});

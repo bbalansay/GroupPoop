@@ -100,7 +100,6 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/", HelloServer)
 	mux.Handle("/login", authProxy)
 	mux.Handle("/login/", authProxy)
 	mux.Handle("/user", usersProxy)
@@ -116,8 +115,4 @@ func main() {
 	log.Printf("server is listening at https://%s", addr)
 	log.Fatal(http.ListenAndServeTLS(addr, tlsCertPath, tlsKeyPath, wrappedMux))
 
-}
-
-func HelloServer(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %s!", r.URL.Path[1:])
 }
