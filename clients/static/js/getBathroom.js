@@ -63,12 +63,19 @@ const populateBathAndReviews = (bathAndRev) => {
   makeRevHead.style = "text-align: left"
   $("#bathroom").append(makeRevHead);
 
-  let txt = document.createElement("textarea")
-  txt.id = "rev"
-  txt.name = "rev"
-  txt.rows = "5"
-  txt.cols = "100"
-  $("#bathroom").append(txt);
+  let score = document.createElement("input")
+  score.id = "score"
+  score.type = "text"
+  score.value = "10"
+  score.name = "score"
+  $("#bathroom").append(score)
+
+  let content = document.createElement("textarea")
+  content.id = "content"
+  content.name = "content"
+  content.rows = "5"
+  content.cols = "100"
+  $("#bathroom").append(content);
 
   let btn = document.createElement("input")
   btn.id = "btnRev"
@@ -107,21 +114,4 @@ const populateBathAndReviews = (bathAndRev) => {
 
     $("#bathroom").append(card);
   }
-}
-
-// $(fav).click((e) => {
-//   e.preventDefault()
-
-  
-// })
-
-async function postFav() {
-  fetch("https://api.grouppoop.icu/favorites/" + params.get("id"), {
-    method: 'POST',
-    headers: {
-      'Authorization': sessionStorage.auth
-    }
-  })
-  .then(checkStatus)
-  .catch(console.log)
 }
