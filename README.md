@@ -31,20 +31,22 @@ Here is our final architecture diagram. As you can see we got rid of RabbitMQ ha
 | 1   | P0       | As a user | I want to get the information about a bathroom on campus |
 | 2   | P0       | As a user | I want to chat with someone while going about my business |
 | 3   | P0       | As a user | I want to create an account and log in |
-| 4   | P1       | As a user | I want to rate a bathroom on campus |
+| 4   | P1       | As a user | I want to review a bathroom on campus |
 | 5   | P1       | As a user | I want to make a list of my favorite bathrooms |
+| 6   | P2       | As a user | I want to edit a review |
 | 6   | P2       | As a user | I want to delete a review |
 
 <br>
 
 | #   | Solution to Issue |
 | --- | -------- |
-| 1   | To get information about a bathroom on campus, make a **GET request** at `/bathrooms/{id}`. Upon receiving the request, the server will attempt to fetch data from the **MySQL database** using a **SELECT statement** and display the information if successful. |
-| 2   | To chat with someone, a user must utilize a websocket connection to connect with other users who are logged in. |
-| 3   | To create an account, a user must make a **POST request** at `/users/{id}`. Upon receiving the request, add a new user to the **MySQL database** using an **INSERT statement** and the provided credentials. |
-| 4   | To review a bathroom on campus, make a **POST request** at `/bathrooms/{id}`. Upon receiving the request, the server will create a new **INSERT statement** using the information prvided to add to the **MySQL database**.|
-| 5   | To make a list of favorite bathrooms, make a **PATCH request** at `/user/{id}`. Upon receiving the request, the server will update the user information in the **MySQL database** to include a list of bathrooms. |
-| 6   | To delete a review of a bathroom make a **DELETE request** at `/review/{id}`. Upon receiving the request, the server will delete a review from the **MySQL database** that matches the given information. |
+| 1   | To get information about a bathroom on campus, make a **GET request** at `/bathroom/:bathroomID`. Upon receiving the request, the server will attempt to fetch data from the **MySQL database** using a **SELECT statement** and return the bathroom information encoded as JSON if successful. |
+| 2   | To chat with someone, a user must utilize a websocket with the `/chat` endpoint connection to connect with other users who are logged in. |
+| 3   | To create an account, a user must make a **POST request** at `/users/:userID`. Upon receiving the request, add a new user to the **MySQL database** using an **INSERT statement** and the provided credentials. |
+| 4   | To review a bathroom on campus, make a **POST request** at `/bathroom/:bathroomID/review`. Upon receiving the request, the server will create a new **INSERT statement** using the information prvided to add to the **MySQL database**.|
+| 5   | To add a bathroom to the list of favorite bathrooms, make a **POST request** at `/favorites/:bathroomID`. Upon receiving the request, the server will update the user information in the **MySQL database** to include a list of bathrooms. |
+| 6   | To edit a review of a bathroom make a **PATCH request** at `/review/:reviewID`. Upon receiving the request, the server will update a review from the **MySQL database** that matches the given information. |
+| 7   | To delete a review of a bathroom make a **DELETE request** at `/review/:reviewID`. Upon receiving the request, the server will delete a review from the **MySQL database** that matches the given information. |
 
 ### Endpoints
 `/user/login`:
