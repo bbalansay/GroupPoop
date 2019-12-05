@@ -12,6 +12,19 @@ $(document).ready(() => {
     console.log(err)
   })
   
+  fetch("https://api.grouppoop.icu/favorites", {
+    method: 'GET',
+    headers: {
+      'Authorization': sessionStorage.auth
+    }
+  })
+  .then(checkStatus)
+  .then((resp) => resp.json())
+  .then(populateFavorites)
+  .catch((err) => {
+    console.log(err)
+  })
+  
   $("#edit-profile-button").click(() => {
     let updates = {
       firstName: $("#firstname-update").val(),
@@ -26,21 +39,24 @@ $(document).ready(() => {
         'Authorization': sessionStorage.auth
       }
     })
-      .then(checkStatus)
-      .then(redirect)
-      .catch(() => {
-        setTimeout(() => $("#alert").html(`<br><div class="alert alert-danger" role="alert">Unable to register an account with these credentials.</div>`), 1000);
-        setTimeout(() => $("#alert").html(""), 5000);
-      })
+    .then(checkStatus)
+    .catch(() => {
+      setTimeout(() => $("#alert").html(`<br><div class="alert alert-danger" role="alert">Unable to register an account with these credentials.</div>`), 1000);
+      setTimeout(() => $("#alert").html(""), 5000);
+    })
   })
   
   
 })
 
+const populateFavorites = async (res) => {
+  for (let fav in res.favorites) {
+    let currFav = await getBathroom(fav.bathroomID);
+    $("#favorites").append(currFav);
+  }
+}
+
 const populateProfile = (profile) => {
-  
-  console.log(profile);
-  
   let user = profile.user;
   let userInfo = document.createElement("div");
   
@@ -81,4 +97,22 @@ const populateProfile = (profile) => {
   
   $("#profile").append(userInfo);
   $("#reviews").append(userReviews);
+}
+
+async function getBathroom(id) {
+  res = await fetch("https://api.grouppoop.icu/bathroom/" + id, {
+    method: 'GET',
+    headers: {
+      'Authorization': sessionStorage.auth
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  console.log(res.body);
+  let currFav = document.createElement("div");
+  let bathName = document.createElement("h5");
+  bathName.textContent = res.body.name;
+  currFav.appendChild(bathName);
+  return currFav;
 }
