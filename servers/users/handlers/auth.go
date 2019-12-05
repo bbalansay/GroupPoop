@@ -191,7 +191,8 @@ func (ctx *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Re
 			http.Error(w, "Could not delete user from database", http.StatusBadRequest)
 			return
 		}
-		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("User deleted\n"))
+		// w.WriteHeader(http.StatusOK)
 	default:
 		http.Error(w, "Method not supported", http.StatusMethodNotAllowed)
 		return
