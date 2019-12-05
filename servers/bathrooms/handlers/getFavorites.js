@@ -9,11 +9,11 @@ async function getFavorites(req, res, {getDBConn}) {
             FROM tblFavorites
             WHERE UserID = ${user.id}
         `)
-
+        console.log("AHHH" + bathroomsIDs)
         for (let result of results) {
             bathroomsIDs.push(result)
         }
-
+        console.log("YUMP" + bathroomsIDs)
         res.set("Content-Type", "application/json")
         return res.status(200).json({"favorites": bathroomIDs});
     } catch (err) {
