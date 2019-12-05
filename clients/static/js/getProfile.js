@@ -11,6 +11,30 @@ $(document).ready(() => {
   .catch((err) => {
     console.log(err)
   })
+  
+  $("#edit-profile-button").click(() => {
+    let updates = {
+      firstName: $("#firstname-update").val(),
+      lastName: $("#lastname-update").val(),
+    }
+    
+    fetch("https://api.grouppoop.icu/user/me", {
+      method: 'PATCH',
+      body: JSON.stringify(updates),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.auth
+      }
+    })
+      .then(checkStatus)
+      .then(redirect)
+      .catch(() => {
+        setTimeout(() => $("#alert").html(`<br><div class="alert alert-danger" role="alert">Unable to register an account with these credentials.</div>`), 1000);
+        setTimeout(() => $("#alert").html(""), 5000);
+      })
+  })
+  
+  
 })
 
 const populateProfile = (profile) => {
@@ -46,5 +70,5 @@ const populateProfile = (profile) => {
   
   
   $("#profile").append(userInfo);
-  $("#profile").append(userReviews);
+  $("#reviews").append(userReviews);
 }
