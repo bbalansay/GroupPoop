@@ -78,7 +78,6 @@ docker run -d \
 -v /etc/letsencrypt:/etc/letsencrypt:ro \
 -e TLSCERT=$TLSCERT \
 -e TLSKEY=$TLSKEY \
--e DSN=$DSN \
 -e REDISADDR=$REDISADDR \
 -e SESSIONKEY=$SESSIONKEY \
 -e BATHROOMADDR=$BATHROOMADDR \
