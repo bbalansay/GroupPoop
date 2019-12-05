@@ -18,6 +18,42 @@ $(document).ready(() => {
     head4.textContent = "We ran into an error... maybe focus on your poop."
     $("#bathroom").append(head4);
   })
+
+  $("#fav").click((e) => {
+    e.preventDefault()
+
+    fetch("https://api.grouppoop.icu/favorites/" + params.get(id), {
+      method: 'POST',
+      headers: {
+        'Authorization': sessionStorage.auth
+      }
+    })
+      .then(checkStatus)
+      .then(console.log(resp.json()))
+      .catch(() => {
+        alert("Bathroom already favorited")
+      })
+  })
+
+  $("#btnRev").click((e) => {
+    e.preventDefault()
+
+    fetch("https://api.grouppoop.icu/bathroom/" + params.get(id) + "/review", {
+      method: 'POST',
+      body: JSON.stringify({
+        Score: $("#score").val(),
+        Content: $("#content").val()
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.auth
+      }
+    })
+      .then(checkStatus)
+      .catch(() => {
+        alert("Could not add review")
+      })
+  })
 })
 
 const populateBathAndReviews = (bathAndRev) => {
@@ -63,12 +99,19 @@ const populateBathAndReviews = (bathAndRev) => {
   makeRevHead.style = "text-align: left"
   $("#bathroom").append(makeRevHead);
 
-  let txt = document.createElement("textarea")
-  txt.id = "rev"
-  txt.name = "rev"
-  txt.rows = "5"
-  txt.cols = "100"
-  $("#bathroom").append(txt);
+  let score = document.createElement("input")
+  score.id = "score"
+  score.type = "text"
+  score.value = "10"
+  score.name = "score"
+  $("#bathroom").append(score)
+
+  let content = document.createElement("textarea")
+  content.id = "content"
+  content.name = "content"
+  content.rows = "5"
+  content.cols = "100"
+  $("#bathroom").append(content);
 
   let btn = document.createElement("input")
   btn.id = "btnRev"
