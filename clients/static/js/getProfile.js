@@ -27,7 +27,7 @@ $(document).ready(() => {
       }
     })
       .then(checkStatus)
-      .then(redirect)
+      .then(window.location.reload())
       .catch(() => {
         setTimeout(() => $("#alert").html(`<br><div class="alert alert-danger" role="alert">Unable to register an account with these credentials.</div>`), 1000);
         setTimeout(() => $("#alert").html(""), 5000);
