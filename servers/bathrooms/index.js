@@ -49,7 +49,7 @@ app.patch("/review/:reviewID", auth.checkAuth, RequestWrapper(editRev.editReview
 app.delete("/review/:reviewID", auth.checkAuth, RequestWrapper(delRev.deleteReview, { getDBConn}));
 
 app.get("/favorites", auth.checkAuth, RequestWrapper(getFav.getFavorites, { getDBConn}));
-app.post("/favorites/", auth.checkAuth, RequestWrapper(addFav.addFavorite, { getDBConn}));
+app.post("/favorites/:bathroomID", auth.checkAuth, RequestWrapper(addFav.addFavorite, { getDBConn}));
 
 async function main() {
     try {
