@@ -150,7 +150,7 @@ func (ms *MySQLStore) Update(id int64, updates *Updates) (*User, error) {
 
 //Delete deletes the user with the given ID
 func (ms *MySQLStore) Delete(id int64) error {
-	insq := "DELETE FROM tblUser WHERE ID = "
+	insq := "DELETE FROM tblUser WHERE ID = ?"
 	_, err := ms.db.Exec(insq, id)
 
 	if err != nil {
@@ -160,8 +160,8 @@ func (ms *MySQLStore) Delete(id int64) error {
 	return nil
 }
 
-func(ms *MySQLStore) GetReviews(id int64) ([]Review, error) {
-	rows, err :=  ms.db.Query("SELECT * FROM tblReview WHERE UserID = ?", id)
+func (ms *MySQLStore) GetReviews(id int64) ([]Review, error) {
+	rows, err := ms.db.Query("SELECT * FROM tblReview WHERE UserID = ?", id)
 	if err != nil {
 		return nil, err
 	}
