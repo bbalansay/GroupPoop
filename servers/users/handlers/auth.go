@@ -99,7 +99,7 @@ func (ctx *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Re
 		//retrieve reviews associated with user
 		reviews, _ := ctx.UserStore.GetReviews(id)
 
-		result := UserAndReview{
+		result := users.UserAndReview{
 			User:    user,
 			Reviews: reviews,
 		}

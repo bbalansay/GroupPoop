@@ -51,7 +51,7 @@ type Updates struct {
 }
 
 type UserAndReview struct {
-	User    User     `json:"user"`
+	User    *User    `json:"user"`
 	Reviews []Review `json:"reviews"`
 }
 
