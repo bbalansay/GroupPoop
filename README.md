@@ -49,6 +49,7 @@ Here is our final architecture diagram. As you can see we got rid of RabbitMQ ha
 | 7   | To delete a review of a bathroom make a **DELETE request** at `/review/:reviewID`. Upon receiving the request, the server will delete a review from the **MySQL database** that matches the given information. |
 
 ### Endpoints
+
 `/login`:
 
 - `POST`: `application/json`: Log in user and returns session token.
@@ -67,7 +68,6 @@ Here is our final architecture diagram. As you can see we got rid of RabbitMQ ha
 
 `/user`:
 
-
 - `POST`: `application/json`: Create a new user.
 	- `201`; `application/json`: Successfully creates a new user, returns encoded user model in body. 
 	- `401`: Cannot verify session token or no session token.  
@@ -75,7 +75,7 @@ Here is our final architecture diagram. As you can see we got rid of RabbitMQ ha
 	- `500`: Internal server error. 
 
 
-  `/user/:userID`:
+`/user/:userID`:
 
 - `GET`: Get user information, including reviews.
 	- `200`; `application/json`: Succesfully retrieves user information, returns encoded user model in body.
@@ -111,26 +111,47 @@ Here is our final architecture diagram. As you can see we got rid of RabbitMQ ha
 `/bathroom`: 
 
 - `GET`: Get all bathrooms information
-	- `200`; `application/json`: Succesfully retrieves bathrooms information, returns encoded review model in body. 
+	- `200`: `application/json`: Succesfully retrieves bathrooms information, returns encoded review model in body. 
 	- `401`: Cannot verify session token or no session token. 
 	- `500`: Internal server error.
 
 `/bathroom/:bathroomID`: 
 
 - `GET`: Get a specific bathroom's information
-	- `200`; `application/json`: Succesfully retrieves a bathroom's information, returns encoded review model in body. 
+	- `200`: `application/json`: Succesfully retrieves a bathroom's information, returns encoded review model in body. 
 	- `401`: Cannot verify session token or no session token. 
 	- `500`: Internal server error.
 
+`/bathroom/:bathroomID/review`: 
+
 - `POST`: `application/json`: Create a new review.
-	- `201`; `application/json`: Successfully creates a new review, returns encoded review model in body. 
+	- `201`: `application/json`: Successfully creates a new review, returns encoded review model in body. 
 	- `401`: Cannot verify session token or no session token. 
 	- `415`: Cannot decode body / received unsupported body. 
 	- `500`: Internal server error.  
 
 <br>
 
+`/favorites`:
+
+- `GET`: Get all favorites information for a given user.
+	- `200`: `application/json`: Succesfully retrieves favorites information, returns encoded review model in body. 
+	- `401`: Cannot verify session token or no session token. 
+	- `500`: Internal server error.
+
+
+`/favorites/:bathroomID`:
+
+- `POST`: Add a favorite for a given user.
+	- `201`: `application/json`: Succesfully creates a new favorites.
+  - `304`: Favorites not modified, favorite already added.
+	- `401`: Cannot verify session token or no session token. 
+	- `500`: Internal server error.
+
+<br>
+
 `/chat`:
+
 - Websocket connection for users to chat with each other.
 - User is required to connect with session token otherwise they are not logged in.
 
@@ -141,72 +162,73 @@ Here is our final architecture diagram. As you can see we got rid of RabbitMQ ha
 
 We will be using MySql as our persistent data store.
 
-`User`: Keeps track of user information. 
+`tblUser`: Keeps track of user information. 
 
 ```
-create table if not exists User ( 
-  user_id int not null auto_increment primary key, 
-  email varchar(512) not null, 
-  pass_hash varchar(128) not null, 
-  user_name varchar(256) not null, 
-  first_name varchar(128) not null, 
-  last_name varchar(128) not null, 
-  photo_url varchar(128) not null, 
-  index (email, user_name) 
-)
-```
-
-<br>
-
-`Chat`: Keeps track of a conversation between two users. 
-```
-create table if not exists Chat ( 
-  chat_id int not null auto_increment primary key, 
-  start_time datetime not null, 
-  end_time datetime not null 
-)
+CREATE TABLE IF NOT EXISTS tblUser (
+  ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  Email VARCHAR(512) NOT NULL UNIQUE,
+  UserName VARCHAR(256) NOT NULL UNIQUE,
+  PassHash VARCHAR(128) NOT NULL,
+  FirstName VARCHAR(128) NOT NULL,
+  LastName VARCHAR(128) NOT NULL,
+  PhotoURL VARCHAR(512) NOT NULL,
+  INDEX (Email, UserName)
+);
 ```
 
 <br>
 
-`Message`: Keeps track of individual message sent from one user. 
+`tblBathroom`: Keeps track of information relating to a bathroom. 
 ```
-create table if not exists Message ( 
-  message_id int not null auto_increment primary key, 
-  FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE not null, 
-  FOREIGN KEY (chat_id) REFERENCES Chat(chat_id) ON DELETE CASCADE not null, 
-  content varchar(512) not null 
-)
-```
-
-<br>
-
-`Bathroom`: Keeps track of information relating to a bathroom. 
-```
-create table if not exists Bathroom ( 
-  bathroom_id int not null auto_increment primary key, 
-  name varchar(128) not null, 
-  description varchar(512) not null, 
-  location varchar(128) not null, 
-  num_sinks int not null, 
-  num_toilets int not null, 
-  num_urinals int not null, 
-  num_trash_cans int not null, 
-  num_hand_dryers int not null, 
-  num_towel_dispenser int not null 
-)
+CREATE TABLE IF NOT EXISTS tblBathroom (
+  ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  Name VARCHAR(256) NOT NULL,
+  Description VARCHAR(512) NOT NULL,
+  Location VARCHAR(128) NOT NULL,
+  Gender VARCHAR(128) NOT NULL,
+  NumSinks INT NOT NULL,
+  NumToilets INT NOT NULL,
+  NumUrinals INT NOT NULL,
+  NumTrashCans INT NOT NULL,
+  NumAirDryers INT NOT NULL,
+  NumTowelDispensers INT NOT NULL
+);
 ```
 
 <br>
 
-`Review`: Keeps track of review a user makes for a bathroom. 
+`tblReview`: Keeps track of review a user makes for a bathroom. 
 ```
-create table if not exists Review ( 
-  review_id int not null auto_increment primary key, 
-  FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE not null, 
-  FOREIGN KEY (bathroom_id) REFERENCES Bathroom(bathroom_id) ON DELETE CASCADE not null, 
-  content varchar(512) not null, 
-  time datetime not null 
-)
+CREATE TABLE IF NOT EXISTS tblReview (
+  ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  UserID INT NOT NULL,
+  FOREIGN KEY (UserID) REFERENCES tblUser(ID) ON DELETE CASCADE,
+  BathroomID INT NOT NULL,
+  FOREIGN KEY (BathroomID) REFERENCES tblBathroom(ID) ON DELETE CASCADE,
+  Score INT NOT NULL,
+  Content VARCHAR(512) NOT NULL,
+  CreatedAt DATETIME NOT NULL,
+  EditedAt DATETIME NOT NULL
+);
 ```
+
+<br>
+
+`tblFavorites`: Keeps track of a user's favorites
+```
+CREATE TABLE IF NOT EXISTS tblFavorites (
+  ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  UserID INT NOT NULL,
+  FOREIGN KEY (UserID) REFERENCES tblUser(ID) ON DELETE CASCADE,
+  BathroomID INT NOT NULL,
+  FOREIGN KEY (BathroomID) REFERENCES tblBathroom(ID) ON DELETE CASCADE
+);
+```
+
+<br>
+
+
+
+
 
