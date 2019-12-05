@@ -17,27 +17,33 @@ async function editReview(req, res, {getDBConn}) {
         }
 
         // check to see if user is author of review
-        if (userID != result[0].UserID) {
+        if (user.id != result[0].UserID) {
             return res.status(403).json({"message": "You are not the creator of this review!"})
         }
-
-        if (req.body.content) {
+        console.log("AH" + req.body.Content)
+        if (req.body.Content) {
+            console.log("GRAH" + req.body.Content)
             await db.query(`
                 UPDATE tblReview SET Score = '${req.body.Score}'
                 WHERE ID = ${reviewID}
             `)
             await db.query(`
-                UPDATE Review SET Content = '${req.body.contnet}'
+                UPDATE tblReview SET Content = '${req.body.Content}'
                 WHERE ID = ${reviewID}
             `)
             await db.query(`
-                UPDATE Review SET EditedAt = NOW()
+                UPDATE tblReview SET EditedAt = NOW()
                 WHERE ID = ${reviewID}
             `)
         }
 
+        let newResult = await db.query(`
+            SELECT * FROM tblReview
+            WHERE ID = ${reviewID}
+        `)
+
         res.set("Content-Type", "application/json")
-        return res.status(201).json(result[0])
+        return res.status(201).json(newResult[0])
     } catch(err) {
         return res.status(500).json({"error": err.message})
     }
