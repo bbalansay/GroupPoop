@@ -39,11 +39,12 @@ $(document).ready(() => {
         'Authorization': sessionStorage.auth
       }
     })
-    .then(checkStatus)
-    .catch(() => {
-      setTimeout(() => $("#alert").html(`<br><div class="alert alert-danger" role="alert">Unable to register an account with these credentials.</div>`), 1000);
-      setTimeout(() => $("#alert").html(""), 5000);
-    })
+      .then(checkStatus)
+      .then(window.location.reload())
+      .catch(() => {
+        setTimeout(() => $("#alert").html(`<br><div class="alert alert-danger" role="alert">Unable to register an account with these credentials.</div>`), 1000);
+        setTimeout(() => $("#alert").html(""), 5000);
+      })
   })
   
   
