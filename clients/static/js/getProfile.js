@@ -65,7 +65,17 @@ const populateProfile = (profile) => {
   reviewTitle.textContent = "Your Reviews";
   userReviews.appendChild(reviewTitle);
   for (let review of profile.reviews) {
-    
+    let currReview = document.createElement("div");
+    let bathID = document.createElement("p");
+    bathID.textContent = review.bathroomID;
+    currReview.appendChild(bathID);
+    let score = document.createElement("p");
+    score.textContent = "Score: " + review.score;
+    currReview.appendChild(score);
+    let content = document.createElement("p");
+    content.textContent = review.content;
+    currReview.appendChild(content);
+    userReviews.appendChild(currReview);
   }
   
   
