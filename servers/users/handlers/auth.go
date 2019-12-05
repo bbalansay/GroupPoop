@@ -99,11 +99,15 @@ func (ctx *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Re
 		//retrieve reviews associated with user
 		reviews, _ := ctx.UserStore.GetReviews(id)
 
+		result := UsersAndReviews{
+			User:    user,
+			Reviews: reviews,
+		}
+
 		// Write response
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(user)
-		json.NewEncoder(w).Encode(reviews)
+		json.NewEncoder(w).Encode(result)
 	case http.MethodPatch: // If request method is PATCH
 		// Retrieve user from store
 		user := &users.User{}
@@ -180,7 +184,7 @@ func (ctx *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Re
 				return
 			}
 		}
-		
+
 		// delete user in user store
 		err = ctx.UserStore.Delete(user.ID)
 		if err != nil {
